@@ -1,0 +1,35 @@
+body
+{
+	background-color: lightblue;
+	font: "Arial"
+}
+
+.backed_pack 
+{
+	padding: 20px;
+    height: 60px;
+    width: 60px;
+    margin-bottom: 10px;
+    background-color: black;
+}
+
+.showed_pack
+{
+	padding: 20px;
+    height: 60px;
+    width: 60px;
+    margin-bottom: 10px;
+    background-color: red;
+}
+
+#deck_pack
+{
+	display: flex;
+    align-items: center;
+
+}
+
+#exit_button
+{
+	height: 60px;
+}
