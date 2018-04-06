@@ -1,7 +1,7 @@
 body
 {
 	background-color: lightblue;
-	font: "Arial"
+    font-family: 'Arial';
 }
 
 .backed_pack 
@@ -27,7 +27,7 @@ body
 }
 
 #deck_pack
-{ֿ
+{:
 }
 
 #exit_button
