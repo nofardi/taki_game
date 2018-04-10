@@ -1,26 +1,33 @@
 <html>
 <head >
-	<link rel="stylesheet" type="text/css" href="taki.css"><title>TAKI</title>
+    <link rel="stylesheet" type="text/css" href="taki.css">
+    <title>Taki Game</title>
 	<script type="text/javascript" src="taki.js"></script>
-<body background="Resources/Background.png">
+<body>
+<div class="game">
+    <div class="players">
+        <!--<div class="player">
+            <div class="disk">
+                <img src="/Resources/Disks/UserDisk.png" alt="User Disk" >
+            </div>
+        </div>-->
+    </div>
+    <div class="draw-pile">
+        <h3>draw-pile</h3>
+    </div>
+    <div class="discard-pile">
+        <h3>discard-pile</h3>
+    </div>
+    <div class="statistics">
+        <ul class="stats">Statistics</ul>
+        <li>Number of turns:</li>
+        <li>Time passed:</li>
+        <li>Average time per turn:</li>
+        <li>Number of time for 1 card:</li>
+    </div>
+    <button id="exit-button" onclick="exit_button_clicked()">Exit game</button>
+</div>
 
-<h1 style="text-align: center;">Welcome to the best game ever!</h1>
-<div style="float: right; display: flex; align-items: center">
-<div>Score: </div>
-<div  class="backed_pack">computer pack</div></div>
-<div style="position: fixed;top: 50%;left: 50%; transform: translate(-50%, -50%);">
-<div class="backed_pack">common pack</div>
-<div id="deck_pack" class="showed_pack">Deck</div></div>
-<div style="position: absolute; bottom:0px;right:25%;left:50%; transform: translate(-50%, -50%);" class="showed_pack">
-<div>Score: </div>
-<div class="">user pack</div></div>
-<ul class="stats">Statistics</ul>
-	<li>Number of turns:</li>
-	<li>Time passed:</li>
-	<li>Average time per turn:</li>
-	<li>Number of time for 1 card:</li>
-
-<button id="exit_button" onclick="exit_button_clicked()" style="align-items: center;">Exit game</button>
 
 </body>
 </html>
