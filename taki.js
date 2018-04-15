@@ -8,6 +8,12 @@ var deck = new Array();
 var players = new Array();
 var currentPlayer = 0;
 
+var player = {
+    cards: [],
+    isComputer: false,
+    currentAmountOfCards: 0
+}
+
 function createDeck() {
     deck = new Array();
     for (var cardValue = 0; cardValue < values.length; cardValue++) {
@@ -25,3 +31,11 @@ function createDeck() {
         }
     }
 }
+
+function deliverCards(amount, player) {
+    for(var i = 0; i < amount ; i++) {
+        player.cards.push(deck.pop());
+        player.currentAmountOfCards++;
+    }
+}
+
