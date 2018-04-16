@@ -12,6 +12,7 @@ body
     grid-template-areas: /*1 2 3 4 5 6 7 8 9 0 1 2 */ /*1*/ ". . . . . . . .             . . . . " /*2*/ ". . . . . . . .             . . . . " /*3*/ ". . . . . . . .             . . . . " /*4*/ ". . . . disP disP disP disP . . . . " /*5*/ ". . . . disP disP disP disP . . . . " /*6*/ ". . . . disP disP disP disP . . . . " /*7*/ ". . . . disP disP disP disP . . . . " /*8*/ ". . . . disP disP disP disP . . . . " /*9*/ ". . . . disP disP disP disP . . . . " /*0*/ ". . . . . . . .             . . . . " /*1*/ ". . . . . . . .             . . . . " /*2*/ ". . . . . . . .             . . . . ";
 }
 
+
 .draw-pile {
     grid-area: drawP;
     /*position: absolute;
@@ -74,11 +75,11 @@ body
 
 #exit-button
 {
-	position: absolute;
+    position: absolute;
     right: 0;
     bottom: 0;
-	margin: 10px;
-	background-color: #4CAF50; /* Green */
+    margin: 10px;
+    background-color: #4CAF50; /* Green */
     border: none;
     color: white;
     padding: 15px 32px;
