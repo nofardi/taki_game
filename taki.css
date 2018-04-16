@@ -5,28 +5,56 @@ body
     background-size: cover;
 }
 
+.container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: minmax(100px, auto);
+    grid-template-areas: /*1 2 3 4 5 6 7 8 9 0 1 2 */ /*1*/ ". . . . . . . .             . . . . " /*2*/ ". . . . . . . .             . . . . " /*3*/ ". . . . . . . .             . . . . " /*4*/ ". . . . disP disP disP disP . . . . " /*5*/ ". . . . disP disP disP disP . . . . " /*6*/ ". . . . disP disP disP disP . . . . " /*7*/ ". . . . disP disP disP disP . . . . " /*8*/ ". . . . disP disP disP disP . . . . " /*9*/ ". . . . disP disP disP disP . . . . " /*0*/ ". . . . . . . .             . . . . " /*1*/ ". . . . . . . .             . . . . " /*2*/ ". . . . . . . .             . . . . ";
+}
+
 .draw-pile {
-    position: absolute;
+    grid-area: drawP;
+    /*position: absolute;
     width: 200px;
     height: 200px;
     top: 40%;
     left: 75%;
     margin: -150px 0 0 -150px;
+    */
     background: green;
     text-align: center;
 }
 
 .discard-pile {
-    position: absolute;
+    grid-area: disP;
+    /*position: absolute;
     width: 350px;
     height: 350px;
     top: 50%;
     left: 50%;
     margin: -150px 0 0 -150px;
+    */
     text-align: center;
-    background: url("Resources/DiscardStage.png") no-repeat;
-    background-size: contain;
+    background: url("Resources/DiscardStage.png") no-repeat center;
+    background-size: auto;
+
 }
+
+/*
+.card {
+    width: 184px;
+    height: 252px;
+    border-radius: 15px;
+    border: 1px black solid;
+    background-color: white;
+    transition: all 0.5s;
+}
+
+.card:hover {
+    border-radius: 50px;
+    transition: all 0.5s;
+}
+
 
 .player {
 
@@ -42,7 +70,7 @@ body
     position: inherit;
     left: 50%;
     bottom: 0;
-}
+}*/
 
 #exit-button
 {
