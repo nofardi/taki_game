@@ -30,8 +30,11 @@ var gameTypeEnum = {
     PVC: 1,
 };
 
-
-var players = new Array();
+var player = {
+    cards: [],
+    isComputer: false,
+    currentAmountOfCards: 0
+};
 
 function game() {
 
@@ -51,23 +54,15 @@ function card(value, color) {
 
     this.getValue = function () {
         return value;
-    }
+    };
     this.getColor = function () {
         return color;
     }
-};
-
-
-var player = {
-    cards: [],
-    isComputer: false,
-    currentAmountOfCards: 0
 }
-
 function createDeck() {
 
     var numOfCardsReturn = 2;
-    var deck = new Array();
+    var deck = [];
     for (var cardValue = 0; cardValue < valuesEnum.length; cardValue++) {
         for (var color = 0; color < colorsEnum.length; color++) { //
             for (var returnIndex = 0; returnIndex < numOfCardsReturn; returnIndex++) { //two of each card.
@@ -91,9 +86,9 @@ function deliverCards(amount, player) {
 }
 
 function createPlayers(numOfPlayers, gameType) {
-    players = new Array();
+    players = [];
     for (var playerIndex = 0; playerIndex < numOfPlayers; playerIndex++) {
-        var hand = new Array();
+        var hand = [];
         var player = {
             Name: 'Player ' + playerIndex,
             ID: playerIndex,
@@ -153,22 +148,6 @@ function dealHands() {
     }
 
     updateDeck();
-}
-
-function updateDeck() {
-    document.getElementById('deckcount').innerHTML = deck.length;
-}
-
-function renderCard(card, player) {
-    var hand = document.getElementById('hand_' + player);
-    hand.appendChild(getCardUI(card));
-}
-
-function getCardUI(card) {
-    var el = document.createElement('div');
-    el.className = 'card';
-    el.innerHTML = card.Color + ' ' + card.Value;
-    return el;
 }
 
 function exit_button_clicked() {
