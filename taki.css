@@ -5,17 +5,16 @@ body
     background-size: cover;
 }
 
-.container{
+.game{
     display: grid;
     grid-template-columns: repeat(12,1fr);
-    grid-auto-rows: minmax(100px,auto);
     grid-template-areas:
-        /*1 2 3 4 5 6 7 8 9 0 1 2 */
+        /*    1 2 3 4 5 6 7 8             9 0 1 2 */
         /*1*/". . . . . . . .             . . . . "
-        /*2*/". . . . . . . .             . . . . "
-        /*3*/". . . . . . . .             . . . . "
-        /*4*/". . . . disP disP disP disP . . . . "
-        /*5*/". . . . disP disP disP disP . . . . "
+        /*2*/". . . . . . . .             drawP drawP . . "
+        /*3*/". . . . . . . .             drawP drawP . . "
+        /*4*/". . . . disP disP disP disP drawP drawP . . "
+        /*5*/". . . . disP disP disP disP drawP drawP . . "
         /*6*/". . . . disP disP disP disP . . . . "
         /*7*/". . . . disP disP disP disP . . . . "
         /*8*/". . . . disP disP disP disP . . . . "
@@ -23,6 +22,8 @@ body
         /*0*/". . . . . . . .             . . . . "
         /*1*/". . . . . . . .             . . . . "
         /*2*/". . . . . . . .             . . . . ";
+    height: 100%;
+    weight: 100%;
 }
 
 
@@ -50,7 +51,7 @@ body
     */
     text-align: center;
     background: url("Resources/DiscardStage.png") no-repeat center;
-    background-size: auto;
+    background-size: contain;
 
 }
 
