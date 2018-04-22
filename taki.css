@@ -55,6 +55,15 @@ body
 
 }
 
+
+.discard-pile button{
+    width: auto ;
+    height: auto;
+    text-align: center;
+
+}
+
+
 /*
 .card {
     width: 184px;
@@ -87,13 +96,14 @@ body
     bottom: 0;
 }*/
 
+/*
 #exit-button
 {
     position: absolute;
     right: 0;
     bottom: 0;
     margin: 10px;
-    background-color: #4CAF50; /* Green */
+    background-color: #4CAF50; !* Green *!
     border: none;
     color: white;
     padding: 15px 32px;
@@ -104,4 +114,5 @@ body
     align-items: center;
 
 }
+*/
 
