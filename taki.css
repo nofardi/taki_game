@@ -9,25 +9,25 @@ body
     display: grid;
     grid-template-columns: repeat(12,1fr);
     grid-template-areas:
-        /*    1 2 3 4 5 6 7 8             9 0 1 2 */
+        /*    1 2 3 4 5 6 7 8             9 10 11 12 */
         /*1*/". . . . . . . .             . . . . "
-        /*2*/". . . . . . . .             drawP drawP . . "
-        /*3*/". . . . . . . .             drawP drawP . . "
-        /*4*/". . . . disP disP disP disP drawP drawP . . "
-        /*5*/". . . . disP disP disP disP drawP drawP . . "
-        /*6*/". . . . disP disP disP disP . . . . "
-        /*7*/". . . . disP disP disP disP . . . . "
-        /*8*/". . . . disP disP disP disP . . . . "
-        /*9*/". . . . disP disP disP disP . . . . "
-        /*0*/". . . . . . . .             . . . . "
-        /*1*/". . . . . . . .             . . . . "
-        /*2*/". . . . . . . .             . . . . ";
+        /*2*/". . . . . . . .             drP drP . . "
+        /*3*/". . . . . . . .             drP drP . . "
+        /*4*/". . . . diP diP diP diP     drP drP . . "
+        /*5*/". . . . diP diP diP diP     drP drP . . "
+        /*6*/". . . . diP diP diP diP     . . . . "
+        /*7*/". . . . diP diP diP diP     . . . . "
+        /*8*/". . . . diP diP diP diP     . . . . "
+        /*9*/". . . . diP diP diP diP     . . . . "
+       /*10*/". . . . . . . .             . . . . "
+       /*11*/". . . . . . . .             . . . . "
+       /*12*/". . . . . . . .             . . . . ";
     height: 100%;
 }
 
 
 .draw-pile {
-    grid-area: drawP;
+    grid-area: drP;
     /*position: absolute;
     width: 200px;
     height: 200px;
@@ -35,12 +35,12 @@ body
     left: 75%;
     margin: -150px 0 0 -150px;
     */
-    background: green;
     text-align: center;
+    background: rgba(255,0,0,0.2);
 }
 
 .discard-pile {
-    grid-area: disP;
+    grid-area: diP;
     /*position: absolute;
     width: 350px;
     height: 350px;
@@ -54,14 +54,15 @@ body
 
 }
 
-
-.discard-pile button{
-    width: auto ;
-    height: auto;
-    text-align: center;
-
+.flipped-card{
+    //TODO: ideal size for cards, need to make it responsive for all sizes.
+    width: 184px;
+    height: 252px;
+    /*border-radius: 15px;*/
+    /*border: 1px black solid;*/
+    /*background-color: white;*/
+    /*transition: all 0.5s;*/
 }
-
 
 /*
 .card {
@@ -108,7 +109,7 @@ body
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
+    diPlay: inline-block;
     font-size: 16px;
     align-items: center;
 
