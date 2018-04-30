@@ -142,7 +142,7 @@ var Game = (function () {
                     legalMove = isLegalMove(player, selectedCard);
                     //todo: notify ui.
                 }
-                Player.discardCard(selectedCard);
+                player.discardCard(selectedCard);
             }
             else {
                 //todo: bold the draw pile and wait for player to draw.
