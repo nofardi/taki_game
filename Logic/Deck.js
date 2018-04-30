@@ -78,6 +78,10 @@ var Deck = (function () {
             else {
                 refillDrawPile();
             }
+        },
+
+        resetDeck: function() {
+
         }
     }
 })();

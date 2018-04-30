@@ -12,12 +12,21 @@ var uiModule = (function () {
         },
 
         populatePlayers: function (players) {
-            players.forEach((player) => {
+            var playerDiv = document.getElementByClassName("players");
+            var flippedCard = document.createElement("img");
+            flippedCard.src = "Resources/FlippedCard.png" ;
+            flippedCard.className="flipped-card";
+            players.forEach(player => {
+                if(player.playerType == playerTypeEnum.Computer)
+                    
+                else if(player.playerType == playerTypeEnum.Human)
                 //TODO: populate players according to playerType.
                 //TODO: populate players
 
             })
-        }
+        },
+
     }
 
 })();
+

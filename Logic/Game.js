@@ -40,10 +40,9 @@ var Game = (function () {
         var gameFinished = false;
         Deck.resetDeck();
         Deck.shuffle(Deck.drawPile);
-        // uiModule.populateDeck();
+        uiModule.populateDeck();
         dealHands();
         Card.prototype.playable = true;
-
 
         // while (!gameFinished ) {
         //     for (var currentPlayerIndex = 0; currentPlayerIndex < players.length; currentPlayerIndex++) {
@@ -63,11 +62,17 @@ var Game = (function () {
         }
     }
 
-
+    function playRound() {
+        // while (!gameFinished ) {
+        //     for (var currentPlayerIndex = 0; currentPlayerIndex < players.length; currentPlayerIndex++) {
+        //         playTurn(players[currentPlayerIndex]);
+        //     }
+        // }
+    }
 
     function playTurn(player) {
         var topDiscardPileCard = Deck.discardPile.top();
-
+        var isTurnFinished = false;
         if (player.isStopped) {     // check and handle if last card was 'STOP'.
             handleStopCard();
         }
@@ -76,10 +81,14 @@ var Game = (function () {
             player.hasPlayableHand = updateCardsStatus(topDiscardPileCard, player.hand);
             // check if any cards are playable.
             if (playerTypeEnum.Human === player.playerType) {
-                handleHumanMove();
+                while(!isTurnFinished) {
+                    isTurnFinished = handleHumanMove();
+                }
             }
             else {
-                handleComputerMove();
+                while(!isTurnFinished) {
+                    isTurnFinished = handleComputerMove();
+                }
             }
         }
 
@@ -117,7 +126,7 @@ var Game = (function () {
                 else if (card.color === topDiscardPileCard.color) {
                     card.playable = hasPlayableHand = true;
                 }
-                else if (card.value === 'CHANGE_COLOR') {
+                else if (card.value === card.cardTypeEnum.CHANGE_COLOR) {
                     card.playable = hasPlayableHand = true;
                 }
                 else {
@@ -143,21 +152,62 @@ var Game = (function () {
                     //todo: notify ui.
                 }
                 player.discardCard(selectedCard);
+                handleAdditionalCards(player, selectedCard);
             }
             else {
                 //todo: bold the draw pile and wait for player to draw.
                 Deck.drawCard(player.hand);
             }
+        }
 
-            function isLegalMove(player, selectedCard) {
-                var legalMove = false;
-                if (selectedCard.playable) {
-                    legalMove = true;
-                }
-
-                return legalMove;
+        function handleComputerMove() {
+            var selectedCard;
+            if(player.hasPlayableHand) {
+                selectedCard = getSelectedCardFromPlayableHand(player);
+                player.discardCard(selectedCard);
+                handleAdditionalCards(player, selectedCard);
+            }
+            else {
+                Deck.drawCard(player.hand)
             }
         }
+
+        function handleAdditionalCards(player, selectedCard) {
+            switch(selectedCard.cardType) {
+                case Card.cardTypeEnum.TAKI:
+                    //run turn of player until out of same color cards\ wishes to pass turn
+                    break;
+                case Card.cardTypeEnum.PLUS:
+                    playTurn(player);
+                    break;
+                case Card.cardTypeEnum.CHANGE_COLOR:
+                    //todo: ask user to choose color and update the pack of the new color
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        function getSelectedCardFromPlayableHand(player) {
+            var playableCard;
+            player.hand.forEach(card => {
+                if(card.playable) {
+                    playableCard = card;
+                    break;
+                }
+            })
+            return playableCard;
+        }
+
+        function isLegalMove(player, selectedCard) {
+            var legalMove = false;
+            if (selectedCard.playable) {
+                legalMove = true;
+            }
+
+            return legalMove;
+        }
+        
     }
 
 
