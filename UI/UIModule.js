@@ -33,6 +33,45 @@ var uiModule = (function () {
             })
         },
 
+        dealHandsToPlayers: function(players) {
+            var compPlayerDivs = document.getElementsByClassName("comp-player");
+            var humanPlayerDivs = document.getElementsByClassName("human-player"); 
+            var compDivArr = Array.from(compPlayerDivs);
+            var humanDivArr = Array.from(humanPlayerDivs);
+
+            var cardIndex;
+            players.forEach(player => {
+                if(player.playerType == player.playerTypeEnum.Computer)
+                {
+                    var compPlayerDiv = compDivArr.pop();
+                    for(cardIndex = 0; cardIndex < player.hand.length; cardIndex++)
+                    {
+                        var flippedCard = document.createElement("img");
+                        flippedCard.src = "Resources/FlippedCard.png" ;
+                        flippedCard.className="flipped-card";
+                        compPlayerDiv.appendChild(flippedCard);
+                    }
+                }
+                else if(player.playerType == player.playerTypeEnum.Human)
+                {
+                    var humanPlayerDiv = humanDivArr.pop();
+                    for(cardIndex = 0; cardIndex < player.hand.length; cardIndex++)
+                    {
+                        var upCard = document.createElement("img");
+                        this.drawUpCard(player.hand[cardIndex], upCard);
+
+                        humanPlayerDiv.appendChild(upCard);
+                    }
+                }
+            })
+        },
+
+        drawUpCard: function(card, element) {
+
+        }
+
+
+
     }
 
 })();

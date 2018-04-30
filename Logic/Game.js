@@ -59,6 +59,7 @@ var Game = (function () {
                     players[playerIndex].currentAmountOfCards++;
                 }
             }
+            uiModule.dealHandsToPlayers(players);
         }
     }
 
