@@ -12,16 +12,23 @@ var uiModule = (function () {
         },
 
         populatePlayers: function (players) {
-            var playerDiv = document.getElementByClassName("players");
-            var flippedCard = document.createElement("img");
-            flippedCard.src = "Resources/FlippedCard.png" ;
-            flippedCard.className="flipped-card";
+            var playersDiv = document.getElementsByClassName("players")[0];
             players.forEach(player => {
-                if(player.playerType == playerTypeEnum.Computer)
-                    
-                else if(player.playerType == playerTypeEnum.Human)
-                //TODO: populate players according to playerType.
-                //TODO: populate players
+                var playerDiv = document.createElement("div");
+                if(player.playerType == player.playerTypeEnum.Computer)
+                {
+                    playerDiv.className = "comp-player";
+
+                }
+                else if(player.playerType == player.playerTypeEnum.Human)
+                {
+                    playerDiv.className = "human-player";   
+                }
+                
+                var playerName = document.createElement("div");
+                playerName.innerHTML = player.name;
+                playerDiv.appendChild(playerName);
+                playersDiv.appendChild(playerDiv);
 
             })
         },

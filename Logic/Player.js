@@ -5,9 +5,13 @@ function Player(name, isComputer, playerIndex, score, Hand, PlayerType, CurrentA
     this.hand = Hand;
     this.playerType = PlayerType;
     this.currentAmountOfCards = CurrentAmountOfCards;
-
     this.isStopped = false;
     this.hasPlayableHand = true;
+
+    this.playerTypeEnum = {
+    	Human: 1,
+        Computer: 2
+    }
 
     this.discardCard = function (selectedCard) {
         var removedCard = null;
@@ -19,4 +23,6 @@ function Player(name, isComputer, playerIndex, score, Hand, PlayerType, CurrentA
         }
         return removedCard;
     }
+
+
 }
