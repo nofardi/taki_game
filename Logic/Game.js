@@ -1,0 +1,186 @@
+var Game = (function () {
+    var playerTypeEnum = {
+        Human: 1,
+        Computer: 2
+    };
+    var gameTypeEnum = {
+        PVC: 1
+    };
+    var players = [];
+
+    function createPlayers(numOfPlayers, gameType) {
+        for (var playerIndex = 0; playerIndex < numOfPlayers; playerIndex++) {
+            var hand = [];
+            var player = new Player('Player ' + playerIndex, false, playerIndex, 0, hand, null, 0);
+            players.push(player);
+        }
+        initPlayersType(gameType, numOfPlayers);
+
+        uiModule.populatePlayers(players);
+    }
+
+    function initPlayersType(gameType) {
+        players[0].playerType = playerTypeEnum.Human;
+        var playerIndex;
+        if (gameType === gameTypeEnum.PVC) { // Player vs Computer
+
+            // init the rest of the players to Computer.
+            for (playerIndex = 1; playerIndex < players.length; playerIndex++) {
+                players[playerIndex].playerType = playerTypeEnum.Computer;
+            }
+        } else { // Player vs Players.
+
+            for (playerIndex = 1; playerIndex < players.length; playerIndex++) {
+                players[playerIndex].playerType = playerTypeEnum.Human;
+            }
+        }
+    }
+
+    function newRound() {
+        var gameFinished = false;
+        Deck.resetDeck();
+        Deck.shuffle(Deck.drawPile);
+        // uiModule.populateDeck();
+        dealHands();
+        Card.prototype.playable = true;
+
+
+        // while (!gameFinished ) {
+        //     for (var currentPlayerIndex = 0; currentPlayerIndex < players.length; currentPlayerIndex++) {
+        //         playTurn(players[currentPlayerIndex]);
+        //     }
+        // }
+        // WebHandler.showStatistics();
+        function dealHands() {
+            var initialCardAmountToPlayer = 8;
+            for (var playerIndex = 0; playerIndex < players.length; playerIndex++) {
+                for (var i = 0; i < initialCardAmountToPlayer; i++) {
+                    players[playerIndex].hand.push(Deck.drawPile.pop());
+                    //todo: ui card movement.
+                    players[playerIndex].currentAmountOfCards++;
+                }
+            }
+        }
+    }
+
+
+
+    function playTurn(player) {
+        var topDiscardPileCard = Deck.discardPile.top();
+
+        if (player.isStopped) {     // check and handle if last card was 'STOP'.
+            handleStopCard();
+        }
+        else {
+            // update cards status.
+            player.hasPlayableHand = updateCardsStatus(topDiscardPileCard, player.hand);
+            // check if any cards are playable.
+            if (playerTypeEnum.Human === player.playerType) {
+                handleHumanMove();
+            }
+            else {
+                handleComputerMove();
+            }
+        }
+
+
+        // makeMove(player, move);
+        // checkWin();
+        // updateComponents();
+
+        function getSelectedCardFromUser() {
+            //todo: get the user choice from the ui.
+            // move= askUI();
+        }
+
+        function handleStopCard() {
+            if (players[(player.playerIndex - 1) % players.length].isStopped === false) { // current player was stopped.
+                player.isStopped = true;
+                //TODO: skip turn if not skipped already.
+            }
+            else { // current player turn.
+                players[(player.playerIndex - 1) % players.length].isStopped = false;
+            }
+        }
+
+        function updateCardsStatus(topDiscardPileCard, hand) {
+            var hasPlayableHand = false;
+            hand.forEach(card => {
+                /*
+                a. top to each hand card color comparison ( including wild cards )
+                b. top to each hand card value comparison
+                c. colorless card
+                */
+                if (card.value === topDiscardPileCard.value) {
+                    card.playable = hasPlayableHand = true;
+                }
+                else if (card.color === topDiscardPileCard.color) {
+                    card.playable = hasPlayableHand = true;
+                }
+                else if (card.value === 'CHANGE_COLOR') {
+                    card.playable = hasPlayableHand = true;
+                }
+                else {
+                    card.playable = false;
+                }
+            })
+            return hasPlayableHand;
+        }
+
+        function makeMove(player, selectedCard) {
+            Deck.discardPile.push(selectedCard);
+        }
+
+        function handleHumanMove() {
+            var selectedCard;
+
+            if (player.hasPlayableHand) {
+                var legalMove = false;
+
+                while (!legalMove) {
+                    selectedCard = getSelectedCardFromUser();
+                    legalMove = isLegalMove(player, selectedCard);
+                    //todo: notify ui.
+                }
+                Player.discardCard(selectedCard);
+            }
+            else {
+                //todo: bold the draw pile and wait for player to draw.
+                Deck.drawCard(player.hand);
+            }
+
+            function isLegalMove(player, selectedCard) {
+                var legalMove = false;
+                if (selectedCard.playable) {
+                    legalMove = true;
+                }
+
+                return legalMove;
+            }
+        }
+    }
+
+
+    return {
+        players: players,
+        initGame: function (numOfPlayers) {
+            // init components.
+            var continuePlaying = true;
+            Deck.createCards();
+            createPlayers(numOfPlayers, gameTypeEnum.PVC);
+
+            // game loop
+            // while (continuePlaying) {
+            newRound();
+            // }
+        }
+
+
+    }
+
+})();
+
+function startGame() {
+    Game.initGame(2);
+}
+
