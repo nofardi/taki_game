@@ -39,16 +39,16 @@ var Deck = (function () {
             for (returnIndex = 0; returnIndex < numOfCardsReturn; returnIndex++) { //two of each card.
                 for (colorIndex = 0; colorIndex < Object.keys(colorsEnum).length; colorIndex++) {
                     for (cardValue = 0; cardValue < numbersEnum.length; cardValue++) {
-                        var card = new Card(numbersEnum[cardValue], colorsEnum[colorIndex], false);
+                        var card = new Card(numbersEnum[cardValue], colorsEnum[Object.keys(colorsEnum)[colorIndex]], false);
                         drawPile.push(card);
                     }
                     for (wildCardValue = 0; wildCardValue < Object.keys(coloredWildCardsEnum).length; wildCardValue++) {
-                        var card = new Card(coloredWildCardsEnum[cardValue], colorsEnum[colorIndex], true);
+                        var card = new Card(coloredWildCardsEnum[Object.keys(coloredWildCardsEnum)[wildCardValue]], colorsEnum[Object.keys(colorsEnum)[colorIndex]], true);
                         drawPile.push(card);
                     }
                 }
                 for (wildCardValue = 0; wildCardValue < Object.keys(colorlessWildCardsEnum).length; wildCardValue++) {
-                    var card = new Card(coloredWildCardsEnum[cardValue], 'COLORLESS', true);
+                    var card = new Card(colorlessWildCardsEnum[Object.keys(colorlessWildCardsEnum)[wildCardValue]], 'COLORLESS', true);
                     drawPile.push(card);
                 }
             }
@@ -77,6 +77,12 @@ var Deck = (function () {
             }
             else {
                 refillDrawPile();
+            }
+        },
+
+        initDiscardDeck: function() {
+            if(Deck.discardPile.length == 0) {
+                Deck.discardPile.push(Deck.drawPile.pop());
             }
         },
 
