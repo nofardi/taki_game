@@ -1,4 +1,5 @@
 var Game = (function () {
+    var currentPlayerIndex = 0;
     var playerTypeEnum = {
         Human: 1,
         Computer: 2
@@ -39,17 +40,12 @@ var Game = (function () {
     function newRound() {
         var gameFinished = false;
         Deck.resetDeck();
+        Deck.initDiscardDeck();
         Deck.shuffle(Deck.drawPile);
         uiModule.populateDeck();
         dealHands();
         Card.prototype.playable = true;
-
-        // while (!gameFinished ) {
-        //     for (var currentPlayerIndex = 0; currentPlayerIndex < players.length; currentPlayerIndex++) {
-        //         playTurn(players[currentPlayerIndex]);
-        //     }
-        // }
-        // WebHandler.showStatistics();
+        currentPlayerIndex = 0;
         function dealHands() {
             var initialCardAmountToPlayer = 8;
             for (var playerIndex = 0; playerIndex < players.length; playerIndex++) {
@@ -59,20 +55,13 @@ var Game = (function () {
                     players[playerIndex].currentAmountOfCards++;
                 }
             }
+
             uiModule.dealHandsToPlayers(players);
         }
     }
 
-    function playRound() {
-        // while (!gameFinished ) {
-        //     for (var currentPlayerIndex = 0; currentPlayerIndex < players.length; currentPlayerIndex++) {
-        //         playTurn(players[currentPlayerIndex]);
-        //     }
-        // }
-    }
-
-    function playTurn(player) {
-        var topDiscardPileCard = Deck.discardPile.top();
+    function playTurn(player, elem) {
+        var topDiscardPileCard = Deck.top();
         var isTurnFinished = false;
         if (player.isStopped) {     // check and handle if last card was 'STOP'.
             handleStopCard();
@@ -83,12 +72,12 @@ var Game = (function () {
             // check if any cards are playable.
             if (playerTypeEnum.Human === player.playerType) {
                 while(!isTurnFinished) {
-                    isTurnFinished = handleHumanMove();
+                    isTurnFinished = handleHumanMove(player, elem);
                 }
             }
             else {
                 while(!isTurnFinished) {
-                    isTurnFinished = handleComputerMove();
+                    isTurnFinished = handleComputerMove(player);
                 }
             }
         }
@@ -98,9 +87,10 @@ var Game = (function () {
         // checkWin();
         // updateComponents();
 
-        function getSelectedCardFromUser() {
-            //todo: get the user choice from the ui.
-            // move= askUI();
+        function getSelectedCardFromUser(elem) {
+
+            var card = Card(elem.getAttribute("value"), elem.getAttribute("color"),elem.getAttribute("isWild") , elem.getAttribute("cardType"));
+            return card;
         }
 
         function handleStopCard() {
@@ -141,14 +131,14 @@ var Game = (function () {
             Deck.discardPile.push(selectedCard);
         }
 
-        function handleHumanMove() {
+        function handleHumanMove(player, elem) {
             var selectedCard;
 
             if (player.hasPlayableHand) {
                 var legalMove = false;
 
                 while (!legalMove) {
-                    selectedCard = getSelectedCardFromUser();
+                    selectedCard = getSelectedCardFromUser(elem);
                     legalMove = isLegalMove(player, selectedCard);
                     //todo: notify ui.
                 }
@@ -161,7 +151,7 @@ var Game = (function () {
             }
         }
 
-        function handleComputerMove() {
+        function handleComputerMove(player) {
             var selectedCard;
             if(player.hasPlayableHand) {
                 selectedCard = getSelectedCardFromPlayableHand(player);
@@ -224,6 +214,11 @@ var Game = (function () {
             // while (continuePlaying) {
             newRound();
             // }
+        },
+
+        playRound: function(elem) {
+            playTurn(players[currentPlayerIndex], elem);
+        
         }
 
 

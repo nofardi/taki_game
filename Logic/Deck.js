@@ -80,6 +80,12 @@ var Deck = (function () {
             }
         },
 
+        initDiscardDeck: function() {
+            if(Deck.discardPile.length == 0) {
+                Deck.discardPile.push(Deck.drawPile.pop());
+            }
+        },
+
         resetDeck: function() {
 
         }

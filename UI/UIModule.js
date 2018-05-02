@@ -59,7 +59,8 @@ var uiModule = (function () {
                     {
                         var upCard = document.createElement("img");
                         this.drawUpCard(player.hand[cardIndex], upCard);
-
+                        upCard.onclick = function() {Game.playRound(this); };
+                       // upCard.addEventListener('click', Game.playRound())
                         humanPlayerDiv.appendChild(upCard);
                     }
                 }
