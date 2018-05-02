@@ -89,7 +89,7 @@ var Game = (function () {
 
         function getSelectedCardFromUser(elem) {
 
-            var card = new Card(elem.getAttribute("cardValue"), elem.getAttribute("cardColor"),elem.getAttribute("isWild") , elem.getAttribute("cardType"));
+            var card = new Card(elem.getAttribute("cardValue"), elem.getAttribute("cardColor"),elem.getAttribute("isWild"));
             return card;
         }
 
@@ -140,7 +140,9 @@ var Game = (function () {
                 while (!legalMove) {
                     selectedCard = getSelectedCardFromUser(elem);
                     legalMove = isLegalMove(player, selectedCard);
-                    //todo: notify ui.
+                    if(!legalMove) {
+                        uiModule.invalidCardChoicePrompt();
+                    }
                 }
                 player.discardCard(selectedCard);
                 handleAdditionalCards(player, selectedCard);
@@ -164,19 +166,23 @@ var Game = (function () {
         }
 
         function handleAdditionalCards(player, selectedCard) {
-            switch(selectedCard.cardType) {
-                case Card.cardTypeEnum.TAKI:
+            switch(selectedCard.cardValue) {
+                case Deck.coloredWildCardsEnum.taki:
                     //run turn of player until out of same color cards\ wishes to pass turn
                     break;
-                case Card.cardTypeEnum.PLUS:
-                    playTurn(player);
-                    break;
-                case Card.cardTypeEnum.CHANGE_COLOR:
+                case Card.colorlessWildCardsEnum.changeColor:
                     //todo: ask user to choose color and update the pack of the new color
+                    uiModule.changeColorPrompt()
                     break;
                 default:
+                    changeToOtherPlayerIndex()
                     break;
             }
+        }
+
+        function changeToOtherPlayerIndex() {
+            currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+
         }
 
         function getSelectedCardFromPlayableHand(player) {

@@ -58,9 +58,10 @@ var uiModule = (function () {
                     for(cardIndex = 0; cardIndex < player.hand.length; cardIndex++)
                     {
                         var upCard = document.createElement("img");
+                        upCard.className = "human-cards"
                         this.drawUpCard(player.hand[cardIndex], upCard);
                         upCard.onclick = function() {Game.playRound(this); };
-                       // upCard.addEventListener('click', Game.playRound())
+                        //add dragging functionality to the discard pile
                         humanPlayerDiv.appendChild(upCard);
                     }
                 }
@@ -72,9 +73,17 @@ var uiModule = (function () {
             element.setAttribute("cardValue", card.value);
             element.setAttribute("isWild", card.isWildCard);
             element.setAttribute("cardType", card.cardType);
+
+            //todo: add styles
+        },
+
+        changeColorPrompt: function() {
+
         }
 
-
+        invalidCardChoicePrompt: function() {
+            alert("You've chosen invalid card, please choose another one.")
+        }
 
     }
 
