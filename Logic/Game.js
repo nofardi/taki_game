@@ -89,7 +89,7 @@ var Game = (function () {
 
         function getSelectedCardFromUser(elem) {
 
-            var card = Card(elem.getAttribute("value"), elem.getAttribute("color"),elem.getAttribute("isWild") , elem.getAttribute("cardType"));
+            var card = new Card(elem.getAttribute("cardValue"), elem.getAttribute("cardColor"),elem.getAttribute("isWild") , elem.getAttribute("cardType"));
             return card;
         }
 

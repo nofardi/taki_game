@@ -68,7 +68,10 @@ var uiModule = (function () {
         },
 
         drawUpCard: function(card, element) {
-
+            element.setAttribute("cardColor", card.color);
+            element.setAttribute("cardValue", card.value);
+            element.setAttribute("isWild", card.isWildCard);
+            element.setAttribute("cardType", card.cardType);
         }
 
 
