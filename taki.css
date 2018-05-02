@@ -1,30 +1,57 @@
-body
-{
+body{
     font-family: 'Arial', sans-serif;
     background-image: url("Resources/Background.png");
     background-size: cover;
+    position: relative;
+    margin: auto;
 }
 
 .game{
+    position: relative;
+    height: 100%;
+}
+.deck{
+    position: absolute;
     display: grid;
-    grid-template-columns: repeat(12,1fr);
+    grid-template-columns: repeat(8,1fr);
     grid-template-areas:
-        /*    1 2 3 4 5 6 7 8             9 10 11 12 */
-        /*1*/". . . . . . . .             . . . . "
-        /*2*/". . . . . . . .             drP drP . . "
-        /*3*/". . . . . . . .             drP drP . . "
-        /*4*/". . . . diP diP diP diP     drP drP . . "
-        /*5*/". . . . diP diP diP diP     drP drP . . "
-        /*6*/". . . . diP diP diP diP     . . . . "
-        /*7*/". . . . diP diP diP diP     . . . . "
-        /*8*/". . . . diP diP diP diP     . . . . "
-        /*9*/". . . . diP diP diP diP     . . . . "
-       /*10*/". . . . . . . .             . . . . "
-       /*11*/". . . . . . . .             . . . . "
-       /*12*/". . . . . . . .             . . . . ";
+        /*    1 2 3   4    5   6   7   8 */
+        /*1*/". . . . . . . ."
+        /*2*/". . . . . .         . ."
+        /*3*/". . diP diP diP diP drP ."
+        /*4*/". . diP diP diP diP . ."
+        /*5*/". . diP diP diP diP . ."
+        /*6*/". . diP diP diP diP . ."
+        /*7*/". . . . . . . ."
+        /*8*/". . . . . . . .";
+
+    width: 100%;
     height: 100%;
 }
 
+.players{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.player1{
+    position: inherit;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    background: url("Resources/Disks/UserDisk.png") no-repeat bottom;
+}
+
+.player2{
+    position: inherit;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    background: url("Resources/Disks/UpperOpponenttDisk.png") no-repeat top;
+}
 
 .draw-pile {
     grid-area: drP;
@@ -40,7 +67,7 @@ body
 }
 
 .discard-pile {
-    grid-area: diP;
+    grid-area: diP ;
     /*position: absolute;
     width: 350px;
     height: 350px;
@@ -55,42 +82,48 @@ body
 }
 
 .flipped-card{
-    //TODO: ideal size for cards, need to make it responsive for all sizes.
-    width: 184px;
-    height: 252px;
+    position: inherit;
+    background:url("Resources/FlippedCard.png") inherit;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    //todo: ideal size for cards, need to make it responsive for all sizes.
     /*border-radius: 15px;*/
     /*border: 1px black solid;*/
     /*background-color: white;*/
     /*transition: all 0.5s;*/
 }
 
-.comp-player {
 
-}
-
-.human-player {
-	
-}
-
-/*
-.card {
+.shown-card {
+    position: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
     width: 184px;
     height: 252px;
     border-radius: 15px;
     border: 1px black solid;
-    background-color: white;
     transition: all 0.5s;
 }
 
+.hand{
+    position: inherit;
+    display: flex;
+    width: 100%;
+
+}
+/*
 .card:hover {
     border-radius: 50px;
     transition: all 0.5s;
 }
 
-
-.player {
-
-}
 
 .disk {
     position: absolute;

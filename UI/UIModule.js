@@ -3,8 +3,8 @@ var uiModule = (function () {
         populateDeck: function () {
             var flippedCard = document.createElement("img");
             var drawPile = document.getElementsByClassName("draw-pile")[0];
-            flippedCard.src = "Resources/FlippedCard.png" ;
-            flippedCard.className="flipped-card";
+            flippedCard.src = "Resources/FlippedCard.png";
+            flippedCard.className = "flipped-card";
             //TODO: need to set the other attributes appropriately.
 
             drawPile.appendChild(flippedCard);
@@ -13,63 +13,44 @@ var uiModule = (function () {
 
         populatePlayers: function (players) {
             var playersDiv = document.getElementsByClassName("players")[0];
+
             players.forEach(player => {
                 var playerDiv = document.createElement("div");
-                if(player.playerType == player.playerTypeEnum.Computer)
-                {
-                    playerDiv.className = "comp-player";
-
-                }
-                else if(player.playerType == player.playerTypeEnum.Human)
-                {
-                    playerDiv.className = "human-player";   
-                }
-                
-                var playerName = document.createElement("div");
-                playerName.innerHTML = player.name;
-                playerDiv.appendChild(playerName);
+                playerDiv.className = "player" + (player.playerIndex + 1);
                 playersDiv.appendChild(playerDiv);
-
             })
         },
 
-        dealHandsToPlayers: function(players) {
-            var compPlayerDivs = document.getElementsByClassName("comp-player");
-            var humanPlayerDivs = document.getElementsByClassName("human-player"); 
-            var compDivArr = Array.from(compPlayerDivs);
-            var humanDivArr = Array.from(humanPlayerDivs);
-
-            var cardIndex;
+        dealHandsToPlayers: function (players) {
             players.forEach(player => {
-                if(player.playerType == player.playerTypeEnum.Computer)
-                {
-                    var compPlayerDiv = compDivArr.pop();
-                    for(cardIndex = 0; cardIndex < player.hand.length; cardIndex++)
-                    {
-                        var flippedCard = document.createElement("img");
-                        flippedCard.src = "Resources/FlippedCard.png" ;
-                        flippedCard.className="flipped-card";
-                        compPlayerDiv.appendChild(flippedCard);
+                var cardIndex;
+                var playerDiv = document.getElementsByClassName("player" + (player.playerIndex+1))[0];
+                var playerHand=document.createElement("div");
+                playerHand.className="hand";
+
+                if (player.playerType == player.playerTypeEnum.Computer) {
+                    for (cardIndex = 0; cardIndex < player.hand.length; cardIndex++) {
+                        var flippedCard = document.createElement("div");
+                        flippedCard.className = "flipped-card";
+                        playerHand.appendChild(flippedCard);
                     }
                 }
-                else if(player.playerType == player.playerTypeEnum.Human)
-                {
-                    var humanPlayerDiv = humanDivArr.pop();
-                    for(cardIndex = 0; cardIndex < player.hand.length; cardIndex++)
-                    {
-                        var upCard = document.createElement("img");
+                else if (player.playerType == player.playerTypeEnum.Human) {
+                    for (cardIndex = 0; cardIndex < player.hand.length; cardIndex++) {
+                        var upCard = document.createElement("div");
                         this.drawUpCard(player.hand[cardIndex], upCard);
 
-                        humanPlayerDiv.appendChild(upCard);
+                        playerHand.appendChild(upCard);
                     }
                 }
+                playerDiv.appendChild(playerHand);
             })
         },
 
-        drawUpCard: function(card, element) {
-
+        drawUpCard: function (card, element) {
+            element.innerHTML=card.value;
+            element.className="shown-card";
         }
-
 
 
     }

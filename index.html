@@ -1,30 +1,32 @@
-    <html>
-    <head>
-        <title>Taki Game</title>
-        <link rel="stylesheet" type="text/css" href="taki.css">
-        <script type="text/javascript" src="Logic/Card.js"></script>
-        <script type="text/javascript" src="Logic/Deck.js"></script>
-        <script type="text/javascript" src="Logic/Player.js"></script>
-        <script type="text/javascript" src="UI/UIModule.js"></script>
-        <script type="text/javascript" src="Logic/Game.js"></script>
-        <body onload="startGame()">
-            <div class="game">
-                <div class="players"></div>
-                <div class="draw-pile">
-                    <h3>draw-pile</h3>
-                </div>
-                <div class="discard-pile">
-                    <h3>discard-pile</h3>
-                </div>
-                <!--<div class="statistics">-->
-                <!--<ul class="stats">Statistics</ul>-->
-                <!--<li>Number of turns:</li>-->
-                <!--<li>Time passed:</li>-->
-                <!--<li>Average time per turn:</li>-->
-                <!--<li>Number of time for 1 card:</li>-->
-                <!--</div>-->
-                <!--<button id="exit-button" onclick="exit_button_clicked()">Exit game</button>-->
-            </div>
-        </body>
+<html>
+<head>
+    <title>Taki Game</title>
+    <link rel="stylesheet" type="text/css" href="taki.css">
+    <script type="text/javascript" src="Logic/Card.js"></script>
+    <script type="text/javascript" src="Logic/Deck.js"></script>
+    <script type="text/javascript" src="Logic/Player.js"></script>
+    <script type="text/javascript" src="UI/UIModule.js"></script>
+    <script type="text/javascript" src="Logic/Game.js"></script>
+<body onload="startGame()">
+<div class="game">
+    <div class="deck">
+        <div class="draw-pile">
+            <h3>draw-pile</h3>
+        </div>
+        <div class="discard-pile">
+            <h3>discard-pile</h3>
+        </div>
+        <!--<div class="statistics">-->
+        <!--<ul class="stats">Statistics</ul>-->
+        <!--<li>Number of turns:</li>-->
+        <!--<li>Time passed:</li>-->
+        <!--<li>Average time per turn:</li>-->
+        <!--<li>Number of time for 1 card:</li>-->
+        <!--</div>-->
+        <!--<button id="exit-button" onclick="exit_button_clicked()">Exit game</button>-->
+    </div>
+    <div class="players"></div>
+</div>
+</body>
 
-    </html>
+</html>

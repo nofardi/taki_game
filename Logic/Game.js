@@ -15,6 +15,7 @@ var Game = (function () {
             players.push(player);
         }
         initPlayersType(gameType, numOfPlayers);
+        console.log("Created "+numOfPlayers + "players.")
 
         uiModule.populatePlayers(players);
     }
@@ -36,8 +37,8 @@ var Game = (function () {
         }
     }
 
-    function newRound() {
-        var gameFinished = false;
+    function initRound() {
+        // var gameFinished = false;
         Deck.resetDeck();
         Deck.shuffle(Deck.drawPile);
         uiModule.populateDeck();
@@ -55,21 +56,14 @@ var Game = (function () {
             for (var playerIndex = 0; playerIndex < players.length; playerIndex++) {
                 for (var i = 0; i < initialCardAmountToPlayer; i++) {
                     players[playerIndex].hand.push(Deck.drawPile.pop());
-                    //todo: ui card movement.
                     players[playerIndex].currentAmountOfCards++;
                 }
             }
+            //todo: ui card movement.
             uiModule.dealHandsToPlayers(players);
         }
     }
 
-    function playRound() {
-        // while (!gameFinished ) {
-        //     for (var currentPlayerIndex = 0; currentPlayerIndex < players.length; currentPlayerIndex++) {
-        //         playTurn(players[currentPlayerIndex]);
-        //     }
-        // }
-    }
 
     function playTurn(player) {
         var topDiscardPileCard = Deck.discardPile.top();
@@ -194,7 +188,6 @@ var Game = (function () {
             player.hand.forEach(card => {
                 if(card.playable) {
                     playableCard = card;
-                    break;
                 }
             })
             return playableCard;
@@ -219,11 +212,7 @@ var Game = (function () {
             var continuePlaying = true;
             Deck.createCards();
             createPlayers(numOfPlayers, gameTypeEnum.PVC);
-
-            // game loop
-            // while (continuePlaying) {
-            newRound();
-            // }
+            initRound();
         }
 
 
