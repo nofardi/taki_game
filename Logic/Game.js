@@ -1,4 +1,5 @@
 var Game = (function () {
+    var currentPlayerIndex = 0;
     var playerTypeEnum = {
         Human: 1,
         Computer: 2
@@ -41,6 +42,7 @@ var Game = (function () {
         // var gameFinished = false;
         Deck.resetDeck();
         Deck.shuffle(Deck.drawPile);
+        Deck.initDiscardDeck();
         uiModule.populateDeck();
         dealHands();
         Card.prototype.playable = true; // todo: move to card?
@@ -66,7 +68,7 @@ var Game = (function () {
 
 
     function playTurn(player) {
-        var topDiscardPileCard = Deck.discardPile.top();
+        var topDiscardPileCard = Deck.top();
         var isTurnFinished = false;
         if (player.isStopped) {     // check and handle if last card was 'STOP'.
             handleStopCard();
@@ -219,6 +221,10 @@ var Game = (function () {
             Deck.createCards();
             createPlayers(numOfPlayers, gameTypeEnum.PVC);
             initRound();
+        },
+        playRound: function(elem) {
+            playTurn(players[currentPlayerIndex], elem);
+        
         }
     }
 

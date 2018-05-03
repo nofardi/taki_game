@@ -33,8 +33,6 @@ var Deck = (function () {
         discardPile: discardPile = [],
         drawPile: drawPile = [],
 
-
-
         createCards: function () {
             var cardValue, colorIndex, returnIndex, wildCardValue;
             var numOfCardsReturn = 2;
@@ -70,9 +68,12 @@ var Deck = (function () {
                 pileToShuffle[j] = temp;
             }
         },
+
         top: function () {
+            uiModule.updateTopDiscardCard(discardPile[discardPile.length - 1]);
             return discardPile[discardPile.length - 1];
         },
+
         drawCard: function (player) {
             if (Deck.drawPile.length >= 1) {
                 player.hand.push(Deck.drawPile.pop());
@@ -86,6 +87,7 @@ var Deck = (function () {
             if(Deck.discardPile.length == 0) {
                 Deck.discardPile.push(Deck.drawPile.pop());
             }
+            this.top();
         },
 
         resetDeck: function() {

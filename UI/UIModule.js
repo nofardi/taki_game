@@ -38,7 +38,7 @@ var uiModule = (function () {
                 else if (player.playerType == player.playerTypeEnum.Human) {
                     for (cardIndex = 0; cardIndex < player.hand.length; cardIndex++) {
                         var upCard = document.createElement("div");
-                        this.drawUpCard(player.hand[cardIndex], upCard);
+                        this.drawUpCard(player.hand[cardIndex], upCard, "shown-card");
                         upCard.onclick = function() {Game.playRound(this); };
 
                         playerHand.appendChild(upCard);
@@ -48,14 +48,14 @@ var uiModule = (function () {
             })
         },
 
-        drawUpCard: function (card, element) {
-            element.innerHTML=card.value;
-            element.className="shown-card";
+        drawUpCard: function (card, element, className) {
+            element.innerHTML= card.value;
+            element.style.backgroundColor = card.color;
+            element.className=className;
             element.setAttribute("cardColor", card.color);
             element.setAttribute("cardValue", card.value);
             element.setAttribute("isWild", card.isWildCard);
             element.setAttribute("cardType", card.cardType);
-            //todo: add styles
         },
 
         changeColorPrompt: function() {
@@ -63,6 +63,12 @@ var uiModule = (function () {
 
         invalidCardChoicePrompt: function() {
             alert("You've chosen invalid card, please choose another one.")
+        },
+
+        updateTopDiscardCard: function(card) {
+
+            var topCard = document.getElementsByClassName("discardTopCard")[0];
+            this.drawUpCard(card, topCard, "discardTopCard");
         }
     }
 

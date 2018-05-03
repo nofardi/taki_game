@@ -83,11 +83,11 @@ body{
 
 .flipped-card{
     position: inherit;
-    background:url("Resources/FlippedCard.png") inherit;
+    background-image: url("Resources/FlippedCard.png");
     display: flex;
     height: 100%;
     width: 100%;
-    //todo: ideal size for cards, need to make it responsive for all sizes.
+    /*todo: ideal size for cards, need to make it responsive for all sizes.
     /*border-radius: 15px;*/
     /*border: 1px black solid;*/
     /*background-color: white;*/
