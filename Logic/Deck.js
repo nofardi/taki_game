@@ -30,9 +30,10 @@ var Deck = (function () {
     }
 
     return {
-
         discardPile: discardPile = [],
         drawPile: drawPile = [],
+
+
 
         createCards: function () {
             var cardValue, colorIndex, returnIndex, wildCardValue;

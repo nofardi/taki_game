@@ -35,59 +35,35 @@ var uiModule = (function () {
                         playerHand.appendChild(flippedCard);
                     }
                 }
-<<<<<<< HEAD
                 else if (player.playerType == player.playerTypeEnum.Human) {
                     for (cardIndex = 0; cardIndex < player.hand.length; cardIndex++) {
                         var upCard = document.createElement("div");
                         this.drawUpCard(player.hand[cardIndex], upCard);
+                        upCard.onclick = function() {Game.playRound(this); };
 
                         playerHand.appendChild(upCard);
-=======
-                else if(player.playerType == player.playerTypeEnum.Human)
-                {
-                    var humanPlayerDiv = humanDivArr.pop();
-                    for(cardIndex = 0; cardIndex < player.hand.length; cardIndex++)
-                    {
-                        var upCard = document.createElement("img");
-                        upCard.className = "human-cards"
-                        this.drawUpCard(player.hand[cardIndex], upCard);
-                        upCard.onclick = function() {Game.playRound(this); };
-                        //add dragging functionality to the discard pile
-                        humanPlayerDiv.appendChild(upCard);
->>>>>>> 4a3fcccaff413bce932c19a1e4a15e11f9f44148
                     }
                 }
                 playerDiv.appendChild(playerHand);
             })
         },
 
-<<<<<<< HEAD
         drawUpCard: function (card, element) {
             element.innerHTML=card.value;
             element.className="shown-card";
-        }
-=======
-        drawUpCard: function(card, element) {
             element.setAttribute("cardColor", card.color);
             element.setAttribute("cardValue", card.value);
             element.setAttribute("isWild", card.isWildCard);
             element.setAttribute("cardType", card.cardType);
->>>>>>> 4a3fcccaff413bce932c19a1e4a15e11f9f44148
-
             //todo: add styles
         },
 
         changeColorPrompt: function() {
-
-<<<<<<< HEAD
-=======
-        }
+        },
 
         invalidCardChoicePrompt: function() {
             alert("You've chosen invalid card, please choose another one.")
         }
-
->>>>>>> 4a3fcccaff413bce932c19a1e4a15e11f9f44148
     }
 
 })();
