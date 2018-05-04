@@ -67,7 +67,7 @@ var Game = (function () {
     }
 
 
-    function playTurn(player) {
+    function playTurn(player, elem) {
         var topDiscardPileCard = Deck.top();
         var isTurnFinished = false;
         if (player.isStopped) {     // check and handle if last card was 'STOP'.
@@ -79,12 +79,12 @@ var Game = (function () {
             // check if any cards are playable.
             if (playerTypeEnum.Human === player.playerType) {
                 while(!isTurnFinished) {
-                    isTurnFinished = handleHumanMove();
+                    isTurnFinished = handleHumanMove(player, elem);
                 }
             }
             else {
                 while(!isTurnFinished) {
-                    isTurnFinished = handleComputerMove();
+                    isTurnFinished = handleComputerMove(player);
                 }
             }
         }
@@ -96,9 +96,21 @@ var Game = (function () {
 
 
         function getSelectedCardFromUser(elem) {
-
-            var card = new Card(elem.getAttribute("cardValue"), elem.getAttribute("cardColor"),elem.getAttribute("isWild"));
+            var value = elem.getAttribute("cardValue");
+            var card = new Card(tryParseInt(elem.getAttribute("cardValue"), elem.getAttribute("cardValue")), elem.getAttribute("cardColor"),(elem.getAttribute("isWild") == "true"));
             return card;
+        }
+
+        function tryParseInt(str, defaultValue) {
+            var retValue = defaultValue;
+             if(str !== null) {
+                 if(str.length > 0) {
+                     if (!isNaN(str)) {
+                         retValue = parseInt(str);
+                     }
+                 }
+             }
+             return retValue;
         }
 
         function handleStopCard() {
@@ -139,20 +151,21 @@ var Game = (function () {
             Deck.discardPile.push(selectedCard);
         }
 
-        function handleHumanMove() {
+        function handleHumanMove(player, elem) {
             var selectedCard;
 
             if (player.hasPlayableHand) {
                 var legalMove = false;
 
-                while (!legalMove) {
-                    selectedCard = getSelectedCardFromUser();
-                    legalMove = isLegalMove(player, selectedCard);
-                    if(!legalMove) {
-                        uiModule.invalidCardChoicePrompt();
-                    }
+                selectedCard = getSelectedCardFromUser(elem);
+                legalMove = isLegalMove(player, selectedCard);
+                if(!legalMove) {
+                    uiModule.invalidCardChoicePrompt();
+                    return;
                 }
-                player.discardCard(selectedCard);
+                
+                var cardIndex = player.discardCard(selectedCard);
+                uiModule.removeCardAtIndex(currentPlayerIndex, cardIndex);
                 handleAdditionalCards(player, selectedCard);
             }
             else {
@@ -161,7 +174,7 @@ var Game = (function () {
             }
         }
 
-        function handleComputerMove() {
+        function handleComputerMove(player) {
             var selectedCard;
             if(player.hasPlayableHand) {
                 selectedCard = getSelectedCardFromPlayableHand(player);
@@ -175,10 +188,10 @@ var Game = (function () {
 
         function handleAdditionalCards(player, selectedCard) {
             switch(selectedCard.cardValue) {
-                case Deck.coloredWildCardsEnum.taki:
+                case Deck.cardTypeEnum.TAKI:
                     //run turn of player until out of same color cards\ wishes to pass turn
                     break;
-                case Card.colorlessWildCardsEnum.changeColor:
+                case selectedCard.cardTypeEnum.CHANGE_COLOR:
                     //todo: ask user to choose color and update the pack of the new color
                     uiModule.changeColorPrompt()
                     break;

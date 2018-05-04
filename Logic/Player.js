@@ -16,12 +16,13 @@ function Player(name, isComputer, playerIndex, score, Hand, PlayerType, CurrentA
     this.discardCard = function (selectedCard) {
         var removedCard = null;
         var cardIndexInHand = this.hand.findIndex(function (card) {
-            return card === selectedCard;
+            return (card.value == selectedCard.value && card.color == selectedCard.color && 
+            	card.isWildCard == selectedCard.isWildCard);
         });
-        if (0 <= cardIndexInHand && cardIndexInHand < this.hand.length) {
-            removedCard = this.hand.splice(cardIndexInHand, 1);
-        }
-        return removedCard;
+        // if (0 <= cardIndexInHand && cardIndexInHand < this.hand.length) {
+        //     removedCard = this.hand.splice(cardIndexInHand, 1);
+        // }
+        return cardIndexInHand;
     }
 
 
