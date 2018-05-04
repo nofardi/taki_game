@@ -37,13 +37,12 @@ var uiModule = (function () {
                 }
                 else if (player.playerType == player.playerTypeEnum.Human) {
                     for (cardIndex = 0; cardIndex < player.hand.length; cardIndex++) {
-                        var upCard = document.createElement("div");
-                        this.drawUpCard(player.hand[cardIndex], upCard, "shown-card");
-                        upCard.onclick = function () {
+                        var shownCard = document.createElement("div");
+                        this.drawUpCard(player.hand[cardIndex], shownCard, "shown-card");
+                        shownCard.onclick = function () {
                             Game.playRound(this);
                         };
-
-                        playerHand.appendChild(upCard);
+                        playerHand.appendChild(shownCard);
                     }
                 }
                 playerDiv.appendChild(playerHand);
@@ -53,15 +52,16 @@ var uiModule = (function () {
         drawUpCard: function (card, cardElement, className) {
 
             this.drawCardValue = function (card, cardElement) {
-                var topValue = document.createElement("div");
-                var bottomValue = document.createElement("div");
-                topValue.className = "top-value";
-                bottomValue.className = "bottom-value";
-                bottomValue.innerHTML = topValue.innerHTML = card.value;
-                bottomValue.style.color = topValue.style.color = card.color;
+                var top = document.createElement("div");
+                var middle= document.createElement("div");
+                var bottom = document.createElement("div");
+                top.className = "top";
+                middle.className="middle";
+                bottom.className = "bottom";
+                bottom.innerHTML = top.innerHTML = card.value;
 
-                cardElement.appendChild(topValue);
-                cardElement.appendChild(bottomValue);
+                cardElement.appendChild(top);
+                cardElement.appendChild(bottom);
 
             }
             this.drawCardValue(card, cardElement);
@@ -69,6 +69,7 @@ var uiModule = (function () {
 
             // element.style.backgroundColor = card.color;
             cardElement.className = className;
+            cardElement.style.color=card.color;
             cardElement.setAttribute("cardColor", card.color);
             cardElement.setAttribute("cardValue", card.value);
             cardElement.setAttribute("isWild", card.isWildCard);

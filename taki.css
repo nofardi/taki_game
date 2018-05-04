@@ -21,10 +21,18 @@ body {
     height: 100%;
 }
 
+
 .players {
     position: absolute;
     width: 100%;
     height: 100%;
+}
+
+.hand {
+    position: fixed;
+    justify-content: center;
+    display: flex;
+    width: 100%;
 }
 
 .player1 {
@@ -36,6 +44,13 @@ body {
     background: url("Resources/Disks/UserDisk.png") no-repeat bottom;
 }
 
+.player1 .hand{
+    top: auto;
+    bottom: 5px;
+    left: auto;
+    right: 5px;
+}
+
 .player2 {
     position: inherit;
     display: flex;
@@ -43,6 +58,11 @@ body {
     width: 100%;
     justify-content: center;
     background: url("Resources/Disks/UpperOpponenttDisk.png") no-repeat top;
+}
+
+.player2  .hand{
+    top: 5px;
+    left: 5px;
 }
 
 .draw-pile {
@@ -73,10 +93,23 @@ body {
 
 }
 
+.flipped-card {
+    background-image: url("Resources/FlippedCard.png");
+    display: flex;
+    position: relative;
+    float: left;
+    margin: 40px 20px;
+    width: 92px;
+    height: 126px;
+    border-radius: 15px;
+    border: 1px black solid;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
 .shown-card {
     display: flex;
-    float: left;
     position: relative;
+    float: left;
     margin: 40px 20px;
     background-color: #fff;
     width: 92px;
@@ -92,13 +125,19 @@ body {
     font-family: Arial, sans-serif;
 }
 
-.shown-card .top-value {
+.shown-card .top {
     position: absolute;
     top: 5px;
     left: 5px;
 }
 
-.shown-card .bottom-value {
+.shown-card .middle {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}
+
+.shown-card .bottom {
     position: absolute;
     top: auto;
     bottom: 5px;
@@ -107,42 +146,25 @@ body {
     transform: rotate(180deg);
 }
 
-.flipped-card {
-    position: inherit;
-    background-image: url("Resources/FlippedCard.png");
-    display: flex;
-    height: 100%;
-    width: 100%;
-    /*todo: ideal size for cards, need to make it responsive for all sizes.
+
+
+/*.card {*/
+    /*position: inherit;*/
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    /*font-size: 15px;*/
+    /*font-weight: bold;*/
+    /*text-align: center;*/
+    /*font-family: Arial, sans-serif;*/
+    /*background-color: #fff;*/
+    /*width: 184px;*/
+    /*height: 252px;*/
     /*border-radius: 15px;*/
     /*border: 1px black solid;*/
-    /*background-color: white;*/
     /*transition: all 0.5s;*/
-}
+/*}*/
 
-.card {
-    position: inherit;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 15px;
-    font-weight: bold;
-    text-align: center;
-    font-family: Arial, sans-serif;
-    background-color: #fff;
-    width: 184px;
-    height: 252px;
-    border-radius: 15px;
-    border: 1px black solid;
-    transition: all 0.5s;
-}
-
-.hand {
-    position: inherit;
-    display: flex;
-    width: 100%;
-
-}
 
 /*
 .card:hover {
