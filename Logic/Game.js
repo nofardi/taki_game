@@ -67,25 +67,24 @@ var Game = (function () {
     }
 
 
-    function playTurn(player, elem) {
+    function playTurn(elem) {
         var topDiscardPileCard = Deck.top();
-        var isTurnFinished = false;
-        if (player.isStopped) {     // check and handle if last card was 'STOP'.
+        if((currentPlayerIndex + 1) != tryParseInt(uiModule.getClickedPlayerParentOfElem(elem))) {
+            uiModule.invalidCardChoicePrompt();
+        }
+
+        if (players[currentPlayerIndex].isStopped) {     // check and handle if last card was 'STOP'.
             handleStopCard();
         }
         else {
             // update cards status.
-            player.hasPlayableHand = updateCardsStatus(topDiscardPileCard, player.hand);
+            players[currentPlayerIndex].hasPlayableHand = updateCardsStatus(topDiscardPileCard, players[currentPlayerIndex].hand);
             // check if any cards are playable.
-            if (playerTypeEnum.Human === player.playerType) {
-                while(!isTurnFinished) {
-                    isTurnFinished = handleHumanMove(player, elem);
-                }
+            if (playerTypeEnum.Human === players[currentPlayerIndex].playerType) {
+                handleHumanMove(players[currentPlayerIndex], elem);
             }
             else {
-                while(!isTurnFinished) {
-                    isTurnFinished = handleComputerMove(player);
-                }
+                handleComputerMove(players[currentPlayerIndex]);
             }
         }
 
@@ -114,12 +113,12 @@ var Game = (function () {
         }
 
         function handleStopCard() {
-            if (players[(player.playerIndex - 1) % players.length].isStopped === false) { // current player was stopped.
-                player.isStopped = true;
-                //TODO: skip turn if not skipped already.
+            if (players[currentPlayerIndex].isStopped === false) { // current player was stopped.
+                players[currentPlayerIndex].isStopped = true;
+                changeToOtherPlayerIndex();
             }
             else { // current player turn.
-                players[(player.playerIndex - 1) % players.length].isStopped = false;
+                players[currentPlayerIndex].isStopped = false;
             }
         }
 
@@ -137,7 +136,7 @@ var Game = (function () {
                 else if (card.color === topDiscardPileCard.color) {
                     card.playable = hasPlayableHand = true;
                 }
-                else if (card.value === card.cardTypeEnum.CHANGE_COLOR) {
+                else if ((card.value === card.cardTypeEnum.CHANGE_COLOR) && (card.color === topDiscardPileCard.color)) {
                     card.playable = hasPlayableHand = true;
                 }
                 else {
@@ -187,22 +186,25 @@ var Game = (function () {
         }
 
         function handleAdditionalCards(player, selectedCard) {
-            switch(selectedCard.cardValue) {
-                case Deck.cardTypeEnum.TAKI:
+            switch(selectedCard.value) {
+                case Deck.coloredWildCardsEnum.taki:
                     //run turn of player until out of same color cards\ wishes to pass turn
                     break;
-                case selectedCard.cardTypeEnum.CHANGE_COLOR:
+                case Deck.colorlessWildCardsEnum.changeColor:
                     //todo: ask user to choose color and update the pack of the new color
-                    uiModule.changeColorPrompt()
+                    var newColor = uiModule.changeColorPrompt();
+                    changeToOtherPlayerIndex();
                     break;
                 default:
-                    changeToOtherPlayerIndex()
+                    changeToOtherPlayerIndex();
                     break;
             }
         }
 
         function changeToOtherPlayerIndex() {
+            uiModule.disablePlayerCard(currentPlayerIndex);
             currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+            uiModule.disablePlayerCard(currentPlayerIndex);
         }
 
         function getSelectedCardFromPlayableHand(player) {
@@ -236,7 +238,7 @@ var Game = (function () {
             initRound();
         },
         playRound: function(elem) {
-            playTurn(players[currentPlayerIndex], elem);
+            playTurn(elem);
         
         }
     }

@@ -32,6 +32,10 @@ var Deck = (function () {
     return {
         discardPile: discardPile = [],
         drawPile: drawPile = [],
+        colorsEnum: colorsEnum,
+        coloredWildCardsEnum: coloredWildCardsEnum,
+        colorlessWildCardsEnum: colorlessWildCardsEnum,
+        numbersEnum: numbersEnum,
 
         createCards: function () {
             var cardValue, colorIndex, returnIndex, wildCardValue;
@@ -88,6 +92,12 @@ var Deck = (function () {
                 Deck.discardPile.push(Deck.drawPile.pop());
             }
             this.top();
+        },
+
+        changeTopDiscardColor: function(color) {
+            discardPile[discardPile.length - 1].color = color;
+            discardPile[discardPile.length - 1].value = colorlessWildCardsEnum.changeColor;
+            uiModule.updateTopDiscardCard(discardPile[discardPile.length - 1]);
         },
 
         resetDeck: function() {

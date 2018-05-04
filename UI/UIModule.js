@@ -89,9 +89,20 @@ var uiModule = (function () {
             cardElement.setAttribute("cardColor", card.color);
             cardElement.setAttribute("cardValue", card.value);
             cardElement.setAttribute("isWild", card.isWildCard);
+            //cardElement.setAttribute("cardType", card.cardType);
         },
 
         changeColorPrompt: function () {
+            var validColor = false
+            while(!validColor) {
+                var colorInput = prompt("Please choose a color to change:");
+                if(Object.keys(Deck.colorsEnum).includes(colorInput.toLowerCase())) {
+                    validColor = true;
+                    Deck.changeTopDiscardColor(colorInput.toLowerCase());
+                } else {
+                    alert("The color you've entered isn't valid");
+                }
+            }
         },
 
         invalidCardChoicePrompt: function () {
@@ -99,7 +110,8 @@ var uiModule = (function () {
         },
 
         updateTopDiscardCard: function (card) {
-            // todo: need fix, doesn't work good... doesn't draw card.
+
+            // todo: fix, doesn't work good... doesn't draw card.
             var topCard = document.getElementsByClassName("discardTopCard")[0];
             this.drawUpCard(card, topCard, "discardTopCard");
         },
@@ -111,6 +123,25 @@ var uiModule = (function () {
             cardElement.style.display = "none";
         },
 
+        getClickedPlayerParentOfElem: function(element) {
+            var playerName = element.parentElement.parentElement.getAttribute("class");
+            return playerName[playerName.length - 1];
+        },
+
+        enablePlayerCards: function(playerIndex) {
+            var playerElement = document.getElementsByClassName("player" + (playerIndex + 1));
+            var handElem = playerElement[0].getElementsByClassName("hand")[0];
+
+            handElem.disabled = true;
+        },
+
+        disablePlayerCards: function(playerIndex) {
+            var playerElement = document.getElementsByClassName("player" + (playerIndex + 1));
+            var handElem = playerElement[0].getElementsByClassName("hand")[0];
+
+            handElem.disabled = false;
+
+        }
     }
 
 })();
