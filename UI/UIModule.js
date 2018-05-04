@@ -24,9 +24,9 @@ var uiModule = (function () {
         dealHandsToPlayers: function (players) {
             players.forEach(player => {
                 var cardIndex;
-                var playerDiv = document.getElementsByClassName("player" + (player.playerIndex+1))[0];
-                var playerHand=document.createElement("div");
-                playerHand.className="hand";
+                var playerDiv = document.getElementsByClassName("player" + (player.playerIndex + 1))[0];
+                var playerHand = document.createElement("div");
+                playerHand.className = "hand";
 
                 if (player.playerType == player.playerTypeEnum.Computer) {
                     for (cardIndex = 0; cardIndex < player.hand.length; cardIndex++) {
@@ -39,7 +39,9 @@ var uiModule = (function () {
                     for (cardIndex = 0; cardIndex < player.hand.length; cardIndex++) {
                         var upCard = document.createElement("div");
                         this.drawUpCard(player.hand[cardIndex], upCard, "shown-card");
-                        upCard.onclick = function() {Game.playRound(this); };
+                        upCard.onclick = function () {
+                            Game.playRound(this);
+                        };
 
                         playerHand.appendChild(upCard);
                     }
@@ -48,24 +50,39 @@ var uiModule = (function () {
             })
         },
 
-        drawUpCard: function (card, element, className) {
-            element.innerHTML= card.value;
-            element.style.backgroundColor = card.color;
-            element.className=className;
-            element.setAttribute("cardColor", card.color);
-            element.setAttribute("cardValue", card.value);
-            element.setAttribute("isWild", card.isWildCard);
-            element.setAttribute("cardType", card.cardType);
+        drawUpCard: function (card, cardElement, className) {
+
+            this.drawCardValue = function (card, cardElement) {
+                var topValue = document.createElement("div");
+                var bottomValue = document.createElement("div");
+                topValue.className = "top-value";
+                bottomValue.className = "bottom-value";
+                bottomValue.innerHTML = topValue.innerHTML = card.value;
+                bottomValue.style.color = topValue.style.color = card.color;
+
+                cardElement.appendChild(topValue);
+                cardElement.appendChild(bottomValue);
+
+            }
+            this.drawCardValue(card, cardElement);
+
+
+            // element.style.backgroundColor = card.color;
+            cardElement.className = className;
+            cardElement.setAttribute("cardColor", card.color);
+            cardElement.setAttribute("cardValue", card.value);
+            cardElement.setAttribute("isWild", card.isWildCard);
+            cardElement.setAttribute("cardType", card.cardType);
         },
 
-        changeColorPrompt: function() {
+        changeColorPrompt: function () {
         },
 
-        invalidCardChoicePrompt: function() {
+        invalidCardChoicePrompt: function () {
             alert("You've chosen invalid card, please choose another one.")
         },
 
-        updateTopDiscardCard: function(card) {
+        updateTopDiscardCard: function (card) {
 
             var topCard = document.getElementsByClassName("discardTopCard")[0];
             this.drawUpCard(card, topCard, "discardTopCard");

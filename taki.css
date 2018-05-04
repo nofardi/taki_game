@@ -1,4 +1,4 @@
-body{
+body {
     font-family: 'Arial', sans-serif;
     background-image: url("Resources/Background.png");
     background-size: cover;
@@ -6,36 +6,28 @@ body{
     margin: auto;
 }
 
-.game{
+.game {
     position: relative;
     height: 100%;
 }
-.deck{
+
+.deck {
     position: absolute;
     display: grid;
-    grid-template-columns: repeat(8,1fr);
-    grid-template-areas:
-        /*    1 2 3   4    5   6   7   8 */
-        /*1*/". . . . . . . ."
-        /*2*/". . . . . .         . ."
-        /*3*/". . diP diP diP diP drP ."
-        /*4*/". . diP diP diP diP . ."
-        /*5*/". . diP diP diP diP . ."
-        /*6*/". . diP diP diP diP . ."
-        /*7*/". . . . . . . ."
-        /*8*/". . . . . . . .";
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-areas: /*    1 2 3   4    5   6   7   8 */ /*1*/ ". . . . . . . ." /*2*/ ". . . . . .         . ." /*3*/ ". . diP diP diP diP drP ." /*4*/ ". . diP diP diP diP . ." /*5*/ ". . diP diP diP diP . ." /*6*/ ". . diP diP diP diP . ." /*7*/ ". . . . . . . ." /*8*/ ". . . . . . . .";
 
     width: 100%;
     height: 100%;
 }
 
-.players{
+.players {
     position: absolute;
     width: 100%;
     height: 100%;
 }
 
-.player1{
+.player1 {
     position: inherit;
     display: flex;
     height: 100%;
@@ -44,7 +36,7 @@ body{
     background: url("Resources/Disks/UserDisk.png") no-repeat bottom;
 }
 
-.player2{
+.player2 {
     position: inherit;
     display: flex;
     height: 100%;
@@ -63,11 +55,11 @@ body{
     margin: -150px 0 0 -150px;
     */
     text-align: center;
-    background: rgba(255,0,0,0.2);
+    background: rgba(255, 0, 0, 0.2);
 }
 
 .discard-pile {
-    grid-area: diP ;
+    grid-area: diP;
     /*position: absolute;
     width: 350px;
     height: 350px;
@@ -81,7 +73,41 @@ body{
 
 }
 
-.flipped-card{
+.shown-card {
+    display: flex;
+    float: left;
+    position: relative;
+    margin: 40px 20px;
+    background-color: #fff;
+    width: 92px;
+    height: 126px;
+    border-radius: 15px;
+    border: 1px black solid;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.shown-card .top-value {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}
+
+.shown-card .bottom-value {
+    position: absolute;
+    top: auto;
+    bottom: 5px;
+    left: auto;
+    right: 5px;
+    transform: rotate(180deg);
+}
+
+.flipped-card {
     position: inherit;
     background-image: url("Resources/FlippedCard.png");
     display: flex;
@@ -94,8 +120,7 @@ body{
     /*transition: all 0.5s;*/
 }
 
-
-.shown-card {
+.card {
     position: inherit;
     display: flex;
     justify-content: center;
@@ -112,12 +137,13 @@ body{
     transition: all 0.5s;
 }
 
-.hand{
+.hand {
     position: inherit;
     display: flex;
     width: 100%;
 
 }
+
 /*
 .card:hover {
     border-radius: 50px;
