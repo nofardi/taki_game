@@ -23,46 +23,40 @@ body {
 
 
 .players {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+    position: inherit;
 }
 
 .hand {
     position: fixed;
-    justify-content: center;
-    display: flex;
-    width: 100%;
+    width: fit-content;
 }
 
 .player1 {
     position: inherit;
     display: flex;
-    height: 100%;
-    width: 100%;
     justify-content: center;
-    background: url("Resources/Disks/UserDisk.png") no-repeat bottom;
+}
+
+.player1 .disk{
+    background: url("Resources/Disks/player1Disk.png") no-repeat top;
 }
 
 .player1 .hand{
-    top: auto;
-    bottom: 5px;
-    left: auto;
-    right: 5px;
+    bottom: 1vh;
 }
 
 .player2 {
     position: inherit;
     display: flex;
-    height: 100%;
-    width: 100%;
     justify-content: center;
-    background: url("Resources/Disks/UpperOpponenttDisk.png") no-repeat top;
+}
+
+.player2 .disk{
+    background: url("Resources/Disks/player2Disk.png") no-repeat bottom;
 }
 
 .player2  .hand{
-    top: 5px;
-    left: 5px;
+    top: 1vh;
 }
 
 .draw-pile {
@@ -93,36 +87,38 @@ body {
 
 }
 
-.flipped-card {
-    background-image: url("Resources/FlippedCard.png");
+.card {
     display: flex;
     position: relative;
     float: left;
-    margin: 40px 20px;
+    margin: 5px;
     width: 92px;
     height: 126px;
     border-radius: 15px;
     border: 1px black solid;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
+.card:hover {
+    width: 100px;
+    height: 140px;
+    transition: all 0.5s;
+}
+.flipped-card {
+    background-image: url("Resources/TakiPattern.png") ;
+    background-size: cover;
+}
 
 .shown-card {
-    display: flex;
-    position: relative;
-    float: left;
-    margin: 40px 20px;
     background-color: #fff;
-    width: 92px;
-    height: 126px;
-    border-radius: 15px;
-    border: 1px black solid;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 
-
-    font-size: 15px;
-    font-weight: bold;
+/*font*/
+    -webkit-text-stroke: thin black;
     text-align: center;
     font-family: Arial, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .shown-card .top {
@@ -133,8 +129,10 @@ body {
 
 .shown-card .middle {
     position: absolute;
-    top: 5px;
-    left: 5px;
+    font-size: 300%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .shown-card .bottom {
@@ -148,31 +146,7 @@ body {
 
 
 
-/*.card {*/
-    /*position: inherit;*/
-    /*display: flex;*/
-    /*justify-content: center;*/
-    /*align-items: center;*/
-    /*font-size: 15px;*/
-    /*font-weight: bold;*/
-    /*text-align: center;*/
-    /*font-family: Arial, sans-serif;*/
-    /*background-color: #fff;*/
-    /*width: 184px;*/
-    /*height: 252px;*/
-    /*border-radius: 15px;*/
-    /*border: 1px black solid;*/
-    /*transition: all 0.5s;*/
-/*}*/
-
-
 /*
-.card:hover {
-    border-radius: 50px;
-    transition: all 0.5s;
-}
-
-
 .disk {
     position: absolute;
     height: 100%;
