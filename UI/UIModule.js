@@ -87,6 +87,13 @@ var uiModule = (function () {
 
             var topCard = document.getElementsByClassName("discardTopCard")[0];
             this.drawUpCard(card, topCard, "discardTopCard");
+        }, 
+
+        removeCardAtIndex: function(playerIndex, cardIndex) {
+            var cardElement = document.getElementsByClassName("player" + (playerIndex + 1));
+            cardElement = cardElement[0].getElementsByClassName("shown-card")[cardIndex];
+
+            cardElement.style.display = "none";
         }
     }
 
