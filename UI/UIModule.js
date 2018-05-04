@@ -79,7 +79,6 @@ var uiModule = (function () {
             }
             this.drawCardValue(card, cardElement);
 
-
             // element.style.backgroundColor = card.color;
             cardElement.className = className;
             cardElement.style.color=card.color;
@@ -90,6 +89,16 @@ var uiModule = (function () {
         },
 
         changeColorPrompt: function () {
+            var validColor = false
+            while(!validColor) {
+                var colorInput = prompt("Please choose a color to change:");
+                if(Object.keys(Deck.colorsEnum).includes(colorInput.toLowerCase())) {
+                    validColor = true;
+                    Deck.changeTopDiscardColor(colorInput.toLowerCase());
+                } else {
+                    alert("The color you've entered isn't valid");
+                }
+            }
         },
 
         invalidCardChoicePrompt: function () {
@@ -97,7 +106,6 @@ var uiModule = (function () {
         },
 
         updateTopDiscardCard: function (card) {
-
             // todo: fix, doesn't work good... doesn't draw card.
             var topCard = document.getElementsByClassName("discardTopCard")[0];
             this.drawUpCard(card, topCard, "discardTopCard");

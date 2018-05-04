@@ -137,7 +137,7 @@ var Game = (function () {
                 else if (card.color === topDiscardPileCard.color) {
                     card.playable = hasPlayableHand = true;
                 }
-                else if (card.value === card.cardTypeEnum.CHANGE_COLOR) {
+                else if ((card.value === card.cardTypeEnum.CHANGE_COLOR) && (card.color === topDiscardPileCard.color)) {
                     card.playable = hasPlayableHand = true;
                 }
                 else {
@@ -187,13 +187,13 @@ var Game = (function () {
         }
 
         function handleAdditionalCards(player, selectedCard) {
-            switch(selectedCard.cardValue) {
-                case Deck.cardTypeEnum.TAKI:
+            switch(selectedCard.value) {
+                case Deck.coloredWildCardsEnum.taki:
                     //run turn of player until out of same color cards\ wishes to pass turn
                     break;
-                case selectedCard.cardTypeEnum.CHANGE_COLOR:
+                case Deck.colorlessWildCardsEnum.changeColor:
                     //todo: ask user to choose color and update the pack of the new color
-                    uiModule.changeColorPrompt()
+                    var newColor = uiModule.changeColorPrompt();
                     break;
                 default:
                     changeToOtherPlayerIndex()
