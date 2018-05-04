@@ -17,7 +17,7 @@ var uiModule = (function () {
 
             this.drawPlayer = function (playerDiv) {
                 function drawPlayerDisk(playerDiv) {
-                    var playerDisk = document.createElement("img");
+                    var playerDisk = document.createElement("div");
                     playerDisk.className = "disk";
                     playerDiv.appendChild(playerDisk);
                 }
@@ -81,15 +81,13 @@ var uiModule = (function () {
                 cardElement.appendChild(bottom);
 
             }
+
             this.drawCardValue(card, cardElement);
-
-
             cardElement.className = "card shown-card";
             cardElement.style.color=card.color;
             cardElement.setAttribute("cardColor", card.color);
             cardElement.setAttribute("cardValue", card.value);
             cardElement.setAttribute("isWild", card.isWildCard);
-            //cardElement.setAttribute("cardType", card.cardType);
         },
 
         changeColorPrompt: function () {

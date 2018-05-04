@@ -36,7 +36,7 @@ body {
     position:  inherit;
 }
 
-.disk{
+.disk {
     position: fixed;
 }
 
@@ -51,8 +51,8 @@ body {
     justify-content: center;
 }
 
-.player1 .disk{
-    background: url("Resources/Disks/player1Disk.png") bottom;
+.player1 .disk {
+    background: url("Resources/Disks/player1Disk.png") no-repeat bottom;
     bottom: 0;
     width: 1450px;
     height: 234px;
@@ -69,7 +69,7 @@ body {
 }
 
 .player2 .disk{
-    background: url("Resources/Disks/player2Disk.png") top;
+    background: url("Resources/Disks/player2Disk.png") no-repeat top;
     top:0;
     width: 1075px;
     height: 212px;
@@ -161,7 +161,6 @@ body {
     right: 5px;
     transform: rotate(180deg);
 }
-
 
 
 /*
