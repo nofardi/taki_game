@@ -14,8 +14,18 @@ body {
 .deck {
     position: absolute;
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    grid-template-areas: /*    1 2 3   4    5   6   7   8 */ /*1*/ ". . . . . . . ." /*2*/ ". . . . . .         . ." /*3*/ ". . diP diP diP diP drP ." /*4*/ ". . diP diP diP diP . ." /*5*/ ". . diP diP diP diP . ." /*6*/ ". . diP diP diP diP . ." /*7*/ ". . . . . . . ." /*8*/ ". . . . . . . .";
+    grid-template-columns: repeat(8, 1fr) ;
+
+    grid-template-areas:
+        /*     1 2 3 4 5 6 7 8 */
+        /*1*/ ". . . . . . . ."
+        /*2*/ ". . . . . .         . ."
+        /*3*/ ". . diP diP diP diP drP ."
+        /*4*/ ". . diP diP diP diP . ."
+        /*5*/ ". . diP diP diP diP . ."
+        /*6*/ ". . diP diP diP diP . ."
+        /*7*/ ". . . . . . . ."
+        /*8*/ ". . . . . . . .";
 
     width: 100%;
     height: 100%;
@@ -23,7 +33,11 @@ body {
 
 
 .players {
-    position: inherit;
+    position:  inherit;
+}
+
+.disk{
+    position: fixed;
 }
 
 .hand {
@@ -38,7 +52,10 @@ body {
 }
 
 .player1 .disk{
-    background: url("Resources/Disks/player1Disk.png") no-repeat top;
+    background: url("Resources/Disks/player1Disk.png") bottom;
+    bottom: 0;
+    width: 1450px;
+    height: 234px;
 }
 
 .player1 .hand{
@@ -52,7 +69,10 @@ body {
 }
 
 .player2 .disk{
-    background: url("Resources/Disks/player2Disk.png") no-repeat bottom;
+    background: url("Resources/Disks/player2Disk.png") top;
+    top:0;
+    width: 1075px;
+    height: 212px;
 }
 
 .player2  .hand{
@@ -61,30 +81,21 @@ body {
 
 .draw-pile {
     grid-area: drP;
-    /*position: absolute;
-    width: 200px;
-    height: 200px;
-    top: 40%;
-    left: 75%;
-    margin: -150px 0 0 -150px;
-    */
-    text-align: center;
+    position: relative;
+    align-items: center;
     background: rgba(255, 0, 0, 0.2);
+}
+
+.draw-pile .flipped-card{
+    position:  fixed;
+    box-shadow: unset;
 }
 
 .discard-pile {
     grid-area: diP;
-    /*position: absolute;
-    width: 350px;
-    height: 350px;
-    top: 50%;
-    left: 50%;
-    margin: -150px 0 0 -150px;
-    */
     text-align: center;
     background: url("Resources/DiscardStage.png") no-repeat center;
     background-size: contain;
-
 }
 
 .card {
@@ -97,12 +108,10 @@ body {
     border-radius: 15px;
     border: 1px black solid;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
 }
-.card:hover {
-    width: 100px;
-    height: 140px;
-    transition: all 0.5s;
-}
+
+
 .flipped-card {
     background-image: url("Resources/TakiPattern.png") ;
     background-size: cover;
@@ -110,7 +119,7 @@ body {
 
 .shown-card {
     background-color: #fff;
-
+    bottom: inherit;
 /*font*/
     -webkit-text-stroke: thin black;
     text-align: center;
@@ -119,6 +128,15 @@ body {
     font-weight: bold;
     text-overflow: ellipsis;
     overflow: hidden;
+}
+
+.shown-card:hover {
+    /*width: 100px;*/
+    /*height: 140px;*/
+    bottom: 2vh;
+    transition: all 0.5s;
+    -webkit-box-shadow: 1px 1px 7px rgba(0,0,0,0.9);
+    box-shadow: 1px 1px 7px rgba(0,0,0,0.9);
 }
 
 .shown-card .top {
@@ -147,11 +165,7 @@ body {
 
 
 /*
-.disk {
-    position: absolute;
-    height: 100%;
-    width: 30%;
-}
+
 
 .disk img {
     position: inherit;

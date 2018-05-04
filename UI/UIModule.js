@@ -1,12 +1,14 @@
 var uiModule = (function () {
     return {
         populateDeck: function () {
-            var flippedCard = document.createElement("img");
             var drawPile = document.getElementsByClassName("draw-pile")[0];
-            flippedCard.className = "flipped-card";
-            //TODO: need to set the other attributes appropriately.
 
-            drawPile.appendChild(flippedCard);
+            //TODO: need to set the other attributes appropriately.
+            Deck.drawPile.forEach(card=> {
+                var flippedCard = document.createElement("div");
+                flippedCard.className = "card flipped-card";
+                drawPile.appendChild(flippedCard);
+            })
             //TODO: need to stack a bunch of cards on each other.
         },
 
@@ -14,10 +16,13 @@ var uiModule = (function () {
             var playersDiv = document.getElementsByClassName("players")[0];
 
             this.drawPlayer = function (playerDiv) {
-                // draw disk.
-                var playerDisk= document.createElement("img");
-                playerDisk.className="disk";
-                playerDiv.appendChild(playerDisk);
+                function drawPlayerDisk(playerDiv) {
+                    var playerDisk = document.createElement("img");
+                    playerDisk.className = "disk";
+                    playerDiv.appendChild(playerDisk);
+                }
+                //todo: draw player name and etc...
+                drawPlayerDisk(playerDiv);
             }
             players.forEach(player => {
                 var playerDiv = document.createElement("div");
@@ -44,7 +49,7 @@ var uiModule = (function () {
                 else if (player.playerType == player.playerTypeEnum.Human) {
                     for (cardIndex = 0; cardIndex < player.hand.length; cardIndex++) {
                         var shownCard = document.createElement("div");
-                        this.drawUpCard(player.hand[cardIndex], shownCard, "card shown-card");
+                        this.drawUpCard(player.hand[cardIndex], shownCard);
                         shownCard.onclick = function () {
                             Game.playRound(this);
                             console.log(shownCard.value+" "+shownCard.color+" was clicked.");
@@ -56,8 +61,7 @@ var uiModule = (function () {
             })
         },
 
-        drawUpCard: function (card, cardElement, className) {
-
+        drawUpCard: function (card, cardElement) {
             this.drawCardValue = function (card, cardElement) {
                 var top = document.createElement("div");
                 var bottom = document.createElement("div");
@@ -80,13 +84,11 @@ var uiModule = (function () {
             this.drawCardValue(card, cardElement);
 
 
-            // element.style.backgroundColor = card.color;
-            cardElement.className = className;
+            cardElement.className = "card shown-card";
             cardElement.style.color=card.color;
             cardElement.setAttribute("cardColor", card.color);
             cardElement.setAttribute("cardValue", card.value);
             cardElement.setAttribute("isWild", card.isWildCard);
-            //cardElement.setAttribute("cardType", card.cardType);
         },
 
         changeColorPrompt: function () {
@@ -97,18 +99,18 @@ var uiModule = (function () {
         },
 
         updateTopDiscardCard: function (card) {
-
-            // todo: fix, doesn't work good... doesn't draw card.
+            // todo: need fix, doesn't work good... doesn't draw card.
             var topCard = document.getElementsByClassName("discardTopCard")[0];
             this.drawUpCard(card, topCard, "discardTopCard");
-        }, 
+        },
 
         removeCardAtIndex: function(playerIndex, cardIndex) {
             var cardElement = document.getElementsByClassName("player" + (playerIndex + 1));
             cardElement = cardElement[0].getElementsByClassName("shown-card")[cardIndex];
 
             cardElement.style.display = "none";
-        }
+        },
+
     }
 
 })();
