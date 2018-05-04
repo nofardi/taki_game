@@ -12,6 +12,12 @@ function Player(name, isComputer, playerIndex, score, Hand, PlayerType, CurrentA
     	Human: 1,
         Computer: 2
     }
+    this.playerDirEnum={
+        Bottom:1,
+        Top:2,
+        Right:3,
+        Left:4,
+    }
 
     this.discardCard = function (selectedCard) {
         var removedCard = null;
