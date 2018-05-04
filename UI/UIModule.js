@@ -116,6 +116,26 @@ var uiModule = (function () {
             cardElement = cardElement[0].getElementsByClassName("shown-card")[cardIndex];
 
             cardElement.style.display = "none";
+        },
+
+        getClickedPlayerParentOfElem: function(element) {
+            var playerName = element.parentElement.parentElement.getAttribute("class");
+            return playerName[playerName.length - 1];
+        },
+
+        enablePlayerCards: function(playerIndex) {
+            var playerElement = document.getElementsByClassName("player" + (playerIndex + 1));
+            var handElem = playerElement[0].getElementsByClassName("hand")[0];
+
+            handElem.disabled = true;
+        },
+
+        disablePlayerCards: function(playerIndex) {
+            var playerElement = document.getElementsByClassName("player" + (playerIndex + 1));
+            var handElem = playerElement[0].getElementsByClassName("hand")[0];
+
+            handElem.disabled = false;
+
         }
     }
 
