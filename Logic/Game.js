@@ -202,9 +202,9 @@ var Game = (function () {
         }
 
         function changeToOtherPlayerIndex() {
-            uiModule.disablePlayerCard(currentPlayerIndex);
+            uiModule.disablePlayerCards(currentPlayerIndex);
             currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
-            uiModule.disablePlayerCard(currentPlayerIndex);
+            uiModule.enablePlayerCards(currentPlayerIndex);
         }
 
         function getSelectedCardFromPlayableHand(player) {

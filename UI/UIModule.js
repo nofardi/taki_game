@@ -109,16 +109,16 @@ var uiModule = (function () {
 
         updateTopDiscardCard: function (card) {
 
-            // todo: fix, doesn't work good... doesn't draw card.
-            var topCard = document.getElementsByClassName("discardTopCard")[0];
-            this.drawUpCard(card, topCard, "discardTopCard");
+            var topCard = document.getElementsByClassName("discard-pile")[0];
+            topCard = topCard.getElementsByClassName("card")[0];
+            topCard.parentElement.replaceChild(card, topCard)
         },
 
         removeCardAtIndex: function(playerIndex, cardIndex) {
             var cardElement = document.getElementsByClassName("player" + (playerIndex + 1));
             cardElement = cardElement[0].getElementsByClassName("shown-card")[cardIndex];
 
-            cardElement.style.display = "none";
+            this.updateTopDiscardCard(cardElement);
         },
 
         getClickedPlayerParentOfElem: function(element) {
@@ -139,6 +139,11 @@ var uiModule = (function () {
 
             handElem.disabled = false;
 
+        },
+
+        initDiscardDeck: function(card) {
+            var topCard = document.getElementsByClassName("discardTopCard")[0];
+            this.drawUpCard(card, topCard);
         }
     }
 

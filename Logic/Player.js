@@ -25,9 +25,11 @@ function Player(name, isComputer, playerIndex, score, Hand, PlayerType, CurrentA
             return (card.value == selectedCard.value && card.color == selectedCard.color && 
             	card.isWildCard == selectedCard.isWildCard);
         });
-        // if (0 <= cardIndexInHand && cardIndexInHand < this.hand.length) {
-        //     removedCard = this.hand.splice(cardIndexInHand, 1);
-        // }
+        if (0 <= cardIndexInHand && cardIndexInHand < this.hand.length) {
+           // removedCard = this.hand.splice(cardIndexInHand, 1);
+            //uiModule.updateTopDiscardCard(selectedCard);
+        }
+
         return cardIndexInHand;
     }
 

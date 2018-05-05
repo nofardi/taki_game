@@ -74,7 +74,7 @@ var Deck = (function () {
         },
 
         top: function () {
-            uiModule.updateTopDiscardCard(discardPile[discardPile.length - 1]);
+      //      uiModule.updateTopDiscardCard(discardPile[discardPile.length - 1]);
             return discardPile[discardPile.length - 1];
         },
 
@@ -91,7 +91,8 @@ var Deck = (function () {
             if(Deck.discardPile.length == 0) {
                 Deck.discardPile.push(Deck.drawPile.pop());
             }
-            this.top();
+            uiModule.initDiscardDeck(discardPile[discardPile.length - 1]);
+           // this.top();
         },
 
         changeTopDiscardColor: function(color) {
