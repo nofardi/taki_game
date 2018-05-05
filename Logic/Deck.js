@@ -81,6 +81,7 @@ var Deck = (function () {
         drawCard: function (player) {
             if (Deck.drawPile.length >= 1) {
                 player.hand.push(Deck.drawPile.pop());
+                return player.hand[player.hand.length - 1];
             }
             else {
                 refillDrawPile();

@@ -205,9 +205,9 @@ var Game = (function () {
         }
 
         function changeToOtherPlayerIndex() {
-            uiModule.disablePlayerCards(currentPlayerIndex);
+        //    uiModule.disablePlayerCards(currentPlayerIndex);
             currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
-            uiModule.enablePlayerCards(currentPlayerIndex);
+        //    uiModule.enablePlayerCards(currentPlayerIndex);
         }
 
         function getSelectedCardFromPlayableHand(player) {
@@ -243,6 +243,10 @@ var Game = (function () {
         playRound: function(elem) {
             playTurn(elem);
         
+        },
+        drawCardToPlayer: function() {
+            var card = Deck.drawCard(players[currentPlayerIndex]);
+            uiModule.addCardToPlayer(players[currentPlayerIndex], card);
         }
     }
 

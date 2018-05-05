@@ -4,11 +4,19 @@ var uiModule = (function () {
             var drawPile = document.getElementsByClassName("draw-pile")[0];
 
             //TODO: need to set the other attributes appropriately.
-            Deck.drawPile.forEach(card=> {
+            if(Deck.drawPile.length > 0) {
                 var flippedCard = document.createElement("div");
                 flippedCard.className = "card flipped-card";
+                flippedCard.onclick = function () {
+                    Game.drawCardToPlayer();
+                };
                 drawPile.appendChild(flippedCard);
-            })
+            }
+            // Deck.drawPile.forEach(card=> {
+            //     var flippedCard = document.createElement("div");
+            //     flippedCard.className = "card flipped-card";
+            //     drawPile.appendChild(flippedCard);
+            // })
             //TODO: need to stack a bunch of cards on each other.
         },
 
@@ -79,7 +87,7 @@ var uiModule = (function () {
                 middle.className="middle";
                 top.className = "top";
                 bottom.className = "bottom";
-              middle.innerHTML=  bottom.innerHTML = top.innerHTML = card.value;
+                middle.innerHTML=  bottom.innerHTML = top.innerHTML = card.value;
 
                 cardElement.appendChild(middle);
                 cardElement.appendChild(top);
@@ -124,6 +132,26 @@ var uiModule = (function () {
             cardElement = cardElement[0].getElementsByClassName("shown-card")[cardIndex];
 
             this.updateTopDiscardCard(cardElement);
+        },
+
+        addCardToPlayer: function(player, card) {
+            var playerDiv = document.getElementsByClassName("player" + (player.playerIndex + 1))[0];
+            var playerHand = playerDiv.getElementsByClassName("hand");
+            var cardElement = document.createElement("div");
+            if(player.playerType == player.playerTypeEnum.Human) {
+            
+                this.createOpenCard(card, cardElement);
+                cardElement.onclick = function () {
+                    Game.playRound(this);
+                };
+                playerHand[0].appendChild(cardElement);
+
+            } else {
+
+                cardElement.className = "card flipped-card";
+                playerHand.appendChild(flippedCard);
+            }
+
         },
 
         getClickedPlayerParentOfElem: function(element) {
