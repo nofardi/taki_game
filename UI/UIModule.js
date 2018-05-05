@@ -39,6 +39,7 @@ var uiModule = (function () {
                 var playerHand = document.createElement("div");
                 playerHand.className = "hand";
 
+
                 if (player.playerType == player.playerTypeEnum.Computer) {
                     for (cardIndex = 0; cardIndex < player.hand.length; cardIndex++) {
                         var flippedCard = document.createElement("div");
@@ -49,10 +50,14 @@ var uiModule = (function () {
                 else if (player.playerType == player.playerTypeEnum.Human) {
                     for (cardIndex = 0; cardIndex < player.hand.length; cardIndex++) {
                         var shownCard = document.createElement("div");
-                        this.drawUpCard(player.hand[cardIndex], shownCard);
+                        this.createOpenCard(player.hand[cardIndex], shownCard);
                         shownCard.onclick = function () {
+                            /*
+                            //todo: add index to each card.
+                            it will be easier to get the card on backend after knowing the index.
+                            */
+                          //  console.log(chosenCard.value+" "+chosenCard.color+" was clicked.");
                             Game.playRound(this);
-                            console.log(shownCard.value+" "+shownCard.color+" was clicked.");
                         };
                         playerHand.appendChild(shownCard);
                     }
@@ -61,8 +66,8 @@ var uiModule = (function () {
             })
         },
 
-        drawUpCard: function (card, cardElement) {
-            this.drawCardValue = function (card, cardElement) {
+        createOpenCard: function (card, cardElement) {
+            this.createCardValue = function (card, cardElement) {
                 var top = document.createElement("div");
                 var bottom = document.createElement("div");
                 var middle= document.createElement("div");
@@ -82,7 +87,7 @@ var uiModule = (function () {
 
             }
 
-            this.drawCardValue(card, cardElement);
+            this.createCardValue(card, cardElement);
             cardElement.className = "card shown-card";
             cardElement.style.color=card.color;
             cardElement.setAttribute("cardColor", card.color);
@@ -143,9 +148,12 @@ var uiModule = (function () {
 
         initDiscardDeck: function(card) {
             var topCard = document.getElementsByClassName("discardTopCard")[0];
-            this.drawUpCard(card, topCard);
+            this.createOpenCard(card, topCard);
         }
-    }
+/*
+        //TODO: uiModule only should talk with game.. and not game with uiModule.
+        // todo: fix it.
+  */  }
 
 })();
 

@@ -171,6 +171,7 @@ var Game = (function () {
             }
             else {
                 //todo: bold the draw pile and wait for player to draw.
+                uiModule.boldDrawPile();
                 Deck.drawCard(player.hand);
             }
         }

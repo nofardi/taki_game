@@ -89,6 +89,7 @@ body {
 .draw-pile .flipped-card{
     position:  fixed;
     box-shadow: unset;
+    transform: rotate(45deg);
 }
 
 .discard-pile {
@@ -96,6 +97,14 @@ body {
     text-align: center;
     background: url("Resources/DiscardStage.png") no-repeat center;
     background-size: contain;
+}
+
+.discard-pile .card{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
 }
 
 .card {
@@ -130,7 +139,10 @@ body {
     overflow: hidden;
 }
 
-.shown-card:hover {
+/*todo: hover active only when my turn.*/
+/*todo:*/
+
+.players .shown-card:hover {
     /*width: 100px;*/
     /*height: 140px;*/
     bottom: 2vh;
