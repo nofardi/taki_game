@@ -73,7 +73,7 @@ var Game = (function () {
             uiModule.invalidCardChoicePrompt();
         }
 
-        if (players[currentPlayerIndex].isStopped) {     // check and handle if last card was 'STOP'.
+        else if (players[currentPlayerIndex].isStopped) {     // check and handle if last card was 'STOP'.
             handleStopCard();
         }
         else {
@@ -164,6 +164,8 @@ var Game = (function () {
                 }
                 
                 var cardIndex = player.discardCard(selectedCard);
+                Deck.discardPile.push(selectedCard);
+                players[currentPlayerIndex].hand.splice(cardIndex, 1);
                 uiModule.removeCardAtIndex(currentPlayerIndex, cardIndex);
                 handleAdditionalCards(player, selectedCard);
             }
