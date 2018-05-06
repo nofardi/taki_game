@@ -60,22 +60,9 @@ function Game(numOfPlayers, players, gameType) {
 
 
         function getSelectedCardFromUser(elem) {
-            var value = elem.getAttribute("cardValue");
-            var card = new Card(tryParseInt(elem.getAttribute("cardValue"), elem.getAttribute("cardValue")), elem.getAttribute("cardColor"), (elem.getAttribute("isWild") == "true"));
-            return card;
+
         }
 
-        function tryParseInt(str, defaultValue) {
-            var retValue = defaultValue;
-            if (str !== null) {
-                if (str.length > 0) {
-                    if (!isNaN(str)) {
-                        retValue = parseInt(str);
-                    }
-                }
-            }
-            return retValue;
-        }
 
         function handleStopCard() {
             if (m_Players[currentPlayerIndex].isStopped === false) { // current player was stopped.

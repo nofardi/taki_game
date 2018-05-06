@@ -93,9 +93,16 @@ var uiModule = (function () {
                             //todo: add index to each card.
                             it will be easier to get the card on backend after knowing the index.
                             */
-
                             console.log(shownCardElement.value + " " + shownCardElement.color + /*todo: add isWild*/" was clicked.");
-                            // this.game.playRound(this);
+                            if(this.game.getCurrentPlayerIndex() == this.players[0].playerIndex){
+                                //todo: throw card.
+                                this.OnClickedCard(this);
+                                // this.game.playRound(this);
+
+                            }
+                            else{
+                                alert("not your turn.");
+                            }
                         };
                         playerHandElement.appendChild(shownCardElement);
                     }
