@@ -1,90 +1,55 @@
-var Game = (function () {
+var playerTypeEnum = {
+    Human: 1,
+    Computer: 2
+};
+var gameTypeEnum = {
+    PVC: 1
+};
+
+function Game(numOfPlayers, players, gameType) {
+    // ctor
     var currentPlayerIndex = 0;
-    var playerTypeEnum = {
-        Human: 1,
-        Computer: 2
-    };
-    var gameTypeEnum = {
-        PVC: 1
-    };
-    var players = [];
+    var m_Deck = Deck();
+    var m_Players = players;
+    initRound();
 
-    function createPlayers(numOfPlayers, gameType) {
-        for (var playerIndex = 0; playerIndex < numOfPlayers; playerIndex++) {
-            var hand = [];
-            var player = new Player('Player ' + playerIndex, false, playerIndex, 0, hand, null, 0);
-            players.push(player);
-        }
-        initPlayersType(gameType, numOfPlayers);
-        console.log("Created "+numOfPlayers + "players.")
-
-        uiModule.populatePlayers(players);
-    }
-
-    function initPlayersType(gameType) {
-        players[0].playerType = playerTypeEnum.Human;
-        var playerIndex;
-        if (gameType === gameTypeEnum.PVC) { // Player vs Computer
-
-            // init the rest of the players to Computer.
-            for (playerIndex = 1; playerIndex < players.length; playerIndex++) {
-                players[playerIndex].playerType = playerTypeEnum.Computer;
-            }
-        } else { // Player vs Players.
-
-            for (playerIndex = 1; playerIndex < players.length; playerIndex++) {
-                players[playerIndex].playerType = playerTypeEnum.Human;
-            }
-        }
-    }
 
     function initRound() {
-        // var gameFinished = false;
-        Deck.resetDeck();
-        Deck.shuffle(Deck.drawPile);
-        Deck.initDiscardDeck();
-        uiModule.populateDeck();
         dealHands();
         Card.prototype.playable = true; // todo: move to card?
 
-        // while (!gameFinished ) {
-        //     for (var currentPlayerIndex = 0; currentPlayerIndex < players.length; currentPlayerIndex++) {
-        //         playTurn(players[currentPlayerIndex]);
-        //     }
-        // }
-        // WebHandler.showStatistics();
+        // move top card of drawPile to DiscardPile.
+        m_Deck.discardPile.push(m_Deck.drawPile.pop());
+
         function dealHands() {
             var initialCardAmountToPlayer = 8;
-            for (var playerIndex = 0; playerIndex < players.length; playerIndex++) {
+            for (var playerIndex = 0; playerIndex < m_Players.length; playerIndex++) {
                 for (var i = 0; i < initialCardAmountToPlayer; i++) {
-                    players[playerIndex].hand.push(Deck.drawPile.pop());
-                    players[playerIndex].currentAmountOfCards++;
+                    m_Players[playerIndex].hand.push(m_Deck.drawPile.pop());
+                    m_Players[playerIndex].currentAmountOfCards++;
                 }
             }
-            //todo: ui card movement.
-            uiModule.dealHandsToPlayers(players);
         }
     }
 
-
     function playTurn(elem) {
-        var topDiscardPileCard = Deck.top();
-        if((currentPlayerIndex + 1) != tryParseInt(uiModule.getClickedPlayerParentOfElem(elem))) {
+        var topCardOnDiscardPile = Deck.top();
+        if ((currentPlayerIndex + 1) != tryParseInt(uiModule.getClickedPlayerParentOfElem(elem))) {
             uiModule.invalidCardChoicePrompt();
         }
 
-        else if (players[currentPlayerIndex].isStopped) {     // check and handle if last card was 'STOP'.
+        else if (m_Players[currentPlayerIndex].isStopped) {     // check and handle if last card was 'STOP'.
             handleStopCard();
         }
         else {
             // update cards status.
-            players[currentPlayerIndex].hasPlayableHand = updateCardsStatus(topDiscardPileCard, players[currentPlayerIndex].hand);
+            m_Players[currentPlayerIndex].hasPlayableHand = updateCardsStatus(topCardOnDiscardPile, m_Players[currentPlayerIndex].hand);
             // check if any cards are playable.
-            if (playerTypeEnum.Human === players[currentPlayerIndex].playerType) {
-                handleHumanMove(players[currentPlayerIndex], elem);
+            if (playerTypeEnum.Human === m_Players[currentPlayerIndex].playerType) {
+                handleHumanMove(m_Players[currentPlayerIndex], elem);
             }
             else {
-                handleComputerMove(players[currentPlayerIndex]);
+                handleComputerMove(m_Players[currentPlayerIndex]);
             }
         }
 
@@ -96,29 +61,29 @@ var Game = (function () {
 
         function getSelectedCardFromUser(elem) {
             var value = elem.getAttribute("cardValue");
-            var card = new Card(tryParseInt(elem.getAttribute("cardValue"), elem.getAttribute("cardValue")), elem.getAttribute("cardColor"),(elem.getAttribute("isWild") == "true"));
+            var card = new Card(tryParseInt(elem.getAttribute("cardValue"), elem.getAttribute("cardValue")), elem.getAttribute("cardColor"), (elem.getAttribute("isWild") == "true"));
             return card;
         }
 
         function tryParseInt(str, defaultValue) {
             var retValue = defaultValue;
-             if(str !== null) {
-                 if(str.length > 0) {
-                     if (!isNaN(str)) {
-                         retValue = parseInt(str);
-                     }
-                 }
-             }
-             return retValue;
+            if (str !== null) {
+                if (str.length > 0) {
+                    if (!isNaN(str)) {
+                        retValue = parseInt(str);
+                    }
+                }
+            }
+            return retValue;
         }
 
         function handleStopCard() {
-            if (players[currentPlayerIndex].isStopped === false) { // current player was stopped.
-                players[currentPlayerIndex].isStopped = true;
+            if (m_Players[currentPlayerIndex].isStopped === false) { // current player was stopped.
+                m_Players[currentPlayerIndex].isStopped = true;
                 changeToOtherPlayerIndex();
             }
             else { // current player turn.
-                players[currentPlayerIndex].isStopped = false;
+                m_Players[currentPlayerIndex].isStopped = false;
             }
         }
 
@@ -158,14 +123,14 @@ var Game = (function () {
 
                 selectedCard = getSelectedCardFromUser(elem);
                 legalMove = isLegalMove(player, selectedCard);
-                if(!legalMove) {
+                if (!legalMove) {
                     uiModule.invalidCardChoicePrompt();
                     return;
                 }
-                
+
                 var cardIndex = player.discardCard(selectedCard);
                 Deck.discardPile.push(selectedCard);
-                players[currentPlayerIndex].hand.splice(cardIndex, 1);
+                m_Players[currentPlayerIndex].hand.splice(cardIndex, 1);
                 uiModule.removeCardAtIndex(currentPlayerIndex, cardIndex);
                 handleAdditionalCards(player, selectedCard);
             }
@@ -178,7 +143,7 @@ var Game = (function () {
 
         function handleComputerMove(player) {
             var selectedCard;
-            if(player.hasPlayableHand) {
+            if (player.hasPlayableHand) {
                 selectedCard = getSelectedCardFromPlayableHand(player);
                 player.discardCard(selectedCard);
                 handleAdditionalCards(player, selectedCard);
@@ -189,7 +154,7 @@ var Game = (function () {
         }
 
         function handleAdditionalCards(player, selectedCard) {
-            switch(selectedCard.value) {
+            switch (selectedCard.value) {
                 case Deck.coloredWildCardsEnum.taki:
                     //run turn of player until out of same color cards\ wishes to pass turn
                     break;
@@ -205,15 +170,15 @@ var Game = (function () {
         }
 
         function changeToOtherPlayerIndex() {
-        //    uiModule.disablePlayerCards(currentPlayerIndex);
-            currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
-        //    uiModule.enablePlayerCards(currentPlayerIndex);
+            //    uiModule.disablePlayerCards(currentPlayerIndex);
+            currentPlayerIndex = (currentPlayerIndex + 1) % m_Players.length;
+            //    uiModule.enablePlayerCards(currentPlayerIndex);
         }
 
         function getSelectedCardFromPlayableHand(player) {
             var playableCard;
             player.hand.forEach(card => {
-                if(card.playable) {
+                if (card.playable) {
                     playableCard = card;
                 }
             })
@@ -228,31 +193,26 @@ var Game = (function () {
 
             return legalMove;
         }
-        
+
     }
 
 
     return {
-        players: players,
-        initGame: function (numOfPlayers) {
-            // init components.
-            Deck.createCards();
-            createPlayers(numOfPlayers, gameTypeEnum.PVC);
-            initRound();
+        players: m_Players,
+        Deck: m_Deck,
+
+        getCurrentPlayerIndex: function(){
+            return currentPlayerIndex;
         },
-        playRound: function(elem) {
+        playRound: function (elem) {
             playTurn(elem);
-        
         },
-        drawCardToPlayer: function() {
-            var card = Deck.drawCard(players[currentPlayerIndex]);
-            uiModule.addCardToPlayer(players[currentPlayerIndex], card);
+        drawCardToPlayer: function () {
+            var card = Deck.drawCard(m_Players[currentPlayerIndex]);
+            uiModule.addCardToPlayer(m_Players[currentPlayerIndex], card);
         }
     }
 
-})();
-
-function startGame() {
-    Game.initGame(2);
 }
+
 
